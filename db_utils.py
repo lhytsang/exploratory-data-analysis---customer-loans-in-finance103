@@ -22,3 +22,6 @@ class RDSDatabaseConnector:
 
 credentials = RDSDatabaseConnector(credentials_dict)
 loan_payments = credentials.initialise_database()
+
+def load_csv(file):
+    return pd.read_csv(file)
