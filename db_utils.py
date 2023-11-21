@@ -16,4 +16,4 @@ class RDSDatabaseConnector:
         df = pd.read_sql(sql, con = engine)
 
 credentials = RDSDatabaseConnector(credentials_dict)
-new_data = credentials.initialise_database()
+loan_payments = credentials.initialise_database()
