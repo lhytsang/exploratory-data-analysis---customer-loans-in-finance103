@@ -10,5 +10,5 @@ class RDSDatabaseConnector:
         self.credentials = credentials
 
     def _initialiseDatabase_(credentials):
-        engine = sqlalchemy.create_engine("postgresql://{RDS_USER}:{RDS_PASSWORD}@{RDS_HOST}:{RDS_PORT}/{RDS_DATABASE}".format(**conf))
+        engine = sqlalchemy.create_engine("postgresql://{RDS_USER}:{RDS_PASSWORD}@{RDS_HOST}:{RDS_PORT}/{RDS_DATABASE}".format(**credentials_dict))
         
