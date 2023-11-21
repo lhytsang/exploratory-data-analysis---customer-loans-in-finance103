@@ -1,5 +1,5 @@
 import pandas as pd
-import sqlalchemy
+import sqlalchemy 
 import yaml
 
 with open('credentials.yaml') as file:
@@ -11,8 +11,9 @@ class RDSDatabaseConnector:
         self.credentials = credentials
 
     def initialise_database(self):
-        engine = sqlalchemy.create_engine(f"postgresql://{credentials['RDS_USER']}:{credentials['RDS_PASSWORD']}@{credentials['RDS_HOST']}:{credentials['RDS_PORT']}/{credentials['RDS_DATABASE']}")
-        loan_payments = pd.DataFrame(data=engine)
+        engine = sqlalchemy.create_engine(f"postgresql://{self.credentials['RDS_USER']}:{self.credentials['RDS_PASSWORD']}@{self.credentials['RDS_HOST']}:{self.credentials['RDS_PORT']}/{self.credentials['RDS_DATABASE']}")
+        sql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES"
+        df = pd.read_sql(sql, con = engine)
 
 credentials = RDSDatabaseConnector(credentials_dict)
 new_data = credentials.initialise_database()
