@@ -22,4 +22,3 @@ class RDSDatabaseConnector:
 
 credentials = RDSDatabaseConnector(credentials_dict)
 loan_payments = credentials.initialise_database()
-credentials.save_file(loan_payments)
