@@ -3,3 +3,4 @@ with open('credentials.yaml') as file:
   
 class RDSDatabaseConnector:
   
+    def __init__(self, credentials):
