@@ -14,3 +14,5 @@ class RDSDatabaseConnector:
         
     def extract_data(engine):
         loan_payments = pd.DataFrame(data=engine)
+
+load_data = RDSDatabaseConnector(credentials_dict)
