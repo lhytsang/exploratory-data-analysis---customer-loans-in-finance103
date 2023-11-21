@@ -9,10 +9,11 @@ class RDSDatabaseConnector:
     def __init__(self, credentials):
         self.credentials = credentials
 
-    def initialise_database(credentials):
-        engine = sqlalchemy.create_engine("postgresql://{RDS_USER}:{RDS_PASSWORD}@{RDS_HOST}:{RDS_PORT}/{RDS_DATABASE}".format(**credentials_dict))
+    def initialise_database(self):
+        engine = sqlalchemy.create_engine("postgresql://{RDS_USER}:{RDS_PASSWORD}@{RDS_HOST}:{RDS_PORT}/{RDS_DATABASE}".format(**self.credentials))
         
-    def extract_data(engine):
-        loan_payments = pd.DataFrame(data=engine)
+    def extract_data(self):
+        loan_payments = pd.DataFrame(data=self.initialise_database())
 
-load_data = RDSDatabaseConnector(credentials_dict)
+credentials = RDSDatabaseConnector(credentials_dict)
+new_data = credentials.initialise_database()
