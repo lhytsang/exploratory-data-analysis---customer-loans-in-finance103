@@ -1,8 +1,9 @@
 import pandas as pd
 import sqlalchemy
+import yaml
 
 with open('credentials.yaml') as file:
-    credentials_dict = file.read()
+    credentials_dict = yaml.safe_load(file)
   
 class RDSDatabaseConnector:
   
