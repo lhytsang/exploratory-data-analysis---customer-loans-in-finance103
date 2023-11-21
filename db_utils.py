@@ -12,3 +12,5 @@ class RDSDatabaseConnector:
     def initialise_database(credentials):
         engine = sqlalchemy.create_engine("postgresql://{RDS_USER}:{RDS_PASSWORD}@{RDS_HOST}:{RDS_PORT}/{RDS_DATABASE}".format(**credentials_dict))
         
+    def extract_data(engine):
+        loan_payments = pd.DataFrame(data=engine)
