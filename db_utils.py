@@ -1,3 +1,6 @@
+import pandas as pd
+import sqlalchemy
+
 with open('credentials.yaml') as file:
     credentials_dict = file.read()
   
