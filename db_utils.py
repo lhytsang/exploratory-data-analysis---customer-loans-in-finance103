@@ -20,6 +20,9 @@ class RDSDatabaseConnector:
     def save_file(self, dataframe):
         dataframe.to_csv('new_file.csv')
 
+class DataTransform:
+    
+
 credentials = RDSDatabaseConnector(credentials_dict)
 loan_payments = credentials.initialise_database()
 
