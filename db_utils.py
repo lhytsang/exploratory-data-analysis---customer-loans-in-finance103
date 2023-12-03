@@ -26,5 +26,5 @@ loan_payments = credentials.initialise_database()
 def load_csv(file):
     return pd.read_csv(file)
 credentials.save_file(loan_payments)
-database = load_csv('new_file.csv')
+database = pd.read_csv('new_file.csv', index_col = 'id')
 print(database)
