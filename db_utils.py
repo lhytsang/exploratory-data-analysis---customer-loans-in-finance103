@@ -28,3 +28,4 @@ def load_csv(file):
 credentials.save_file(loan_payments)
 database = pd.read_csv('new_file.csv', index_col = 'id')
 print(database)
+print(database.info())
