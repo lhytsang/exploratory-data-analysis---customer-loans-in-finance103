@@ -37,5 +37,8 @@ def load_csv(file):
     return pd.read_csv(file)
 credentials.save_file(loan_payments)
 database = pd.read_csv('new_file.csv', index_col = 'id')
-print(database)
-print(database.info())
+
+cleaned_data = DataTransform(database)
+no_null_data = cleaned_data.fill_zeros(database)
+
+print(no_null_data.info())
