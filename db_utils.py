@@ -29,6 +29,11 @@ class DataTransform:
         new_dataframe = dataframe.fillna(0)
 
         return new_dataframe
+    
+    def change_type(self, dataframe_column, data_type):
+        dataframe_column = dataframe_column.astype(data_type)
+
+        return dataframe_column
 
 credentials = RDSDatabaseConnector(credentials_dict)
 loan_payments = credentials.initialise_database()
