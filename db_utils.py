@@ -25,6 +25,11 @@ class DataTransform:
     def __init__(self, dataframe):
         self.dataframe = dataframe
 
+    def fill_zeros(self, dataframe):
+        new_dataframe = dataframe.fillna(0)
+
+        return new_dataframe
+
 credentials = RDSDatabaseConnector(credentials_dict)
 loan_payments = credentials.initialise_database()
 
