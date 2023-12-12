@@ -25,6 +25,15 @@ class DataTransform:
     def __init__(self, dataframe):
         self.dataframe = dataframe
 
+    def check_empty(self, dataframe_col):
+        empty_vals = 0
+
+        for cell in dataframe_col:
+            if cell.empty:
+                empty_vals += 1
+                
+        print(f"There are {empty_vals} empty values in the {dataframe_col} column.")
+
     def fill_zeros(self, column_name):
         new_dataframe = column_name.fillna(0)
 
