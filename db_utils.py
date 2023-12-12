@@ -34,6 +34,11 @@ class DataTransform:
         dataframe_column = dataframe_column.astype(data_type)
 
         return dataframe_column
+    
+    def date_data(self, dataframe, dataframe_column):
+        dataframe.dataframe_column = pd.to_datetime(dataframe.dataframe_column)
+
+        return dataframe
 
 credentials = RDSDatabaseConnector(credentials_dict)
 loan_payments = credentials.initialise_database()
