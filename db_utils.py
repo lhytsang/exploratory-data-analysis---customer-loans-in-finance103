@@ -57,6 +57,9 @@ def load_csv(file):
 credentials.save_file(loan_payments)
 database = pd.read_csv('new_file.csv', index_col = 'id')
 
+for item in database['term']:
+    item = item.replace('month', '')
+
 cleaned_data = DataTransform(database)
 no_null_data = cleaned_data.fill_zeros(database)
 
