@@ -62,3 +62,5 @@ categorical_data = ['grade', 'sub_grade', 'home_ownership', 'verification_status
 for date_column in date_data:
     for date in database[date_column]:
         date = pd.to_datetime(date, errors = 'coerce')
+
+print(database.info())
