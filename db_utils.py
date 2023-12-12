@@ -32,7 +32,10 @@ class DataTransform:
             if cell.empty:
                 empty_vals += 1
 
-        return 'empty', empty_vals
+            if empty_vals == 0:
+                return 'empty', empty_vals
+            else: 
+                return 'non-empty', empty_vals
 
     def fill_zeros(self, column_name):
         new_dataframe = column_name.fillna(0)
