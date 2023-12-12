@@ -25,8 +25,8 @@ class DataTransform:
     def __init__(self, dataframe):
         self.dataframe = dataframe
 
-    def fill_zeros(self, dataframe):
-        new_dataframe = dataframe.fillna(0)
+    def fill_zeros(self, column_name):
+        new_dataframe = column_name.fillna(0)
 
         return new_dataframe
     
