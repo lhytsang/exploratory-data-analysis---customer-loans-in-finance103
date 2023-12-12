@@ -31,8 +31,8 @@ class DataTransform:
         for cell in dataframe_col:
             if cell.empty:
                 empty_vals += 1
-                
-        print(f"There are {empty_vals} empty values in the {dataframe_col} column.")
+
+        return empty_vals
 
     def fill_zeros(self, column_name):
         new_dataframe = column_name.fillna(0)
