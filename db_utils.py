@@ -61,6 +61,9 @@ cleaned_data = DataTransform(database)
 date_data = ['issue_date', 'earliest_credit_line', 'last_payment_date', 'next_payment_date',
              'last_credit_pull_date']
 
+categorical_data = ['grade', 'sub_grade', 'home_ownership', 'verification_status', 'loan_status', 
+                    'payment_plan', 'purpose', 'application_type']
+
 #for item in database['term']:
 #    item = item.replace('month', '')
 
