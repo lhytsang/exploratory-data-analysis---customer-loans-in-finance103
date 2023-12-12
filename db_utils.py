@@ -25,13 +25,6 @@ class DataTransform:
     def __init__(self, dataframe):
         self.dataframe = dataframe
 
-   # def check_empty(self, dataframe_col):
-   #     empty_vals = 0
-
-   #     for cell in dataframe_col:
-   #         if cell.empty:
-   #             empty_vals += 1
-
     def fill_zeros(self, column_name):
         new_dataframe = column_name.fillna(0)
 
@@ -56,7 +49,6 @@ credentials.save_file(loan_payments)
 database = pd.read_csv('new_file.csv', index_col = 'id')
 
 cleaned_data = DataTransform(database)
-#no_null_data = cleaned_data.fill_zeros(database)
 
 date_data = ['issue_date', 'earliest_credit_line', 'last_payment_date', 'next_payment_date',
              'last_credit_pull_date']
