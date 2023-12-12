@@ -32,8 +32,6 @@ class DataTransform:
    #         if cell.empty:
    #             empty_vals += 1
 
-
-
     def fill_zeros(self, column_name):
         new_dataframe = column_name.fillna(0)
 
@@ -60,8 +58,11 @@ database = pd.read_csv('new_file.csv', index_col = 'id')
 cleaned_data = DataTransform(database)
 #no_null_data = cleaned_data.fill_zeros(database)
 
-for item in database['term']:
-    item = item.replace('month', '')
+date_data = ['issue_date', 'earliest_credit_line', 'last_payment_date', 'next_payment_date',
+             'last_credit_pull_date']
+
+#for item in database['term']:
+#    item = item.replace('month', '')
 
 
 print(cleaned_data.head())
