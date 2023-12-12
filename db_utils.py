@@ -58,7 +58,3 @@ categorical_data = ['grade', 'sub_grade', 'home_ownership', 'verification_status
 
 #for item in database['term']:
 #    item = item.replace('month', '')
-
-
-print(cleaned_data.head())
-print(cleaned_data.info())
