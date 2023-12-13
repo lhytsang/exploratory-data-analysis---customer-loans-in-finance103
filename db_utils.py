@@ -29,7 +29,7 @@ class DataTransform:
     def fill_zeros(self, dataframe, column_name):
         dataframe[column_name] = dataframe[column_name].fillna(0)
 
-        return column_name
+        return dataframe, column_name
     
     def change_type(self, dataframe_column, data_type):
         dataframe_column = dataframe_column.astype(data_type)
@@ -39,7 +39,7 @@ class DataTransform:
     def date_data(self, dataframe, dataframe_column):
         dataframe[dataframe_column] = pd.to_datetime(dataframe[dataframe_column], format = 'mixed')
 
-        return dataframe_column
+        return dataframe, dataframe_column
 
 credentials = RDSDatabaseConnector(credentials_dict)
 loan_payments = credentials.initialise_database()
@@ -55,7 +55,7 @@ date_data = ['issue_date', 'earliest_credit_line', 'last_payment_date', 'next_pa
              'last_credit_pull_date']
 
 categorical_data = ['grade', 'sub_grade', 'home_ownership', 'verification_status', 'loan_status', 
-                    'payment_plan', 'purpose', 'application_type']
+                    'payment_plan', 'purpose', 'policy_code', 'application_type']
 fixed_data = ['id', 'member_id']
 string_data = ['term', 'employment_length']
 
@@ -67,10 +67,15 @@ non_numeric_data = date_data + categorical_data + fixed_data
 column_headings = database.columns.values.tolist()
 numeric_data = [column for column in column_headings if column not in non_numeric_data]
 
-for date_column in date_data:
-    database[date_column] = cleaned_data.date_data(database, date_column)
+print(numeric_data)
+print(database.info())
 
-for numeric_column in numeric_data:
-    database[numeric_column] = cleaned_data.fill_zeros(database, numeric_column)
+for date_column in date_data:
+    database, date_column = cleaned_data.date_data(database, date_column)
 
 print(database.info())
+
+for numeric_column in numeric_data:
+    database, numeric_column = cleaned_data.fill_zeros(database, numeric_column)
+
+#print(database.info())
