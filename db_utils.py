@@ -50,6 +50,9 @@ class DataFrameInfo:
     def info(self, dataframe):
         return dataframe.info()
     
+    def stats(self, dataframe):
+        return dataframe.describe()
+
     def unique_vals(self, dataframe, dataframe_column):
         distinct_values = dataframe[dataframe_column].unique()
 
