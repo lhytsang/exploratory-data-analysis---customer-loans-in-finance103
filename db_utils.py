@@ -29,9 +29,9 @@ class DataTransform:
 
     def fill_empty(self, dataframe, column_name, data_type):
         if data_type == 'numeric':
-            dataframe[column_name] = dataframe[column_name].fillna(np.nan)
+            dataframe[column_name] = dataframe[column_name].fillna(0)
         else:
-            dataframe[column_name] = dataframe[column_name].fillna(None)
+            dataframe[column_name] = dataframe[column_name].fillna(np.nan)
 
         return dataframe, column_name
     
