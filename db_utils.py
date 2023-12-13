@@ -77,5 +77,3 @@ for numeric_column in numeric_data:
 
 for categories in categorical_data:
     database, categories = cleaned_data.change_type(database, categories, 'category')
-
-print(database.info())
