@@ -56,6 +56,8 @@ date_data = ['issue_date', 'earliest_credit_line', 'last_payment_date', 'next_pa
 categorical_data = ['grade', 'sub_grade', 'home_ownership', 'verification_status', 'loan_status', 
                     'payment_plan', 'purpose', 'application_type']
 
+string_data = ['term', 'employment_length']
+
 non_numeric_data = date_data + categorical_data
 column_headings = database.columns.values.tolist()
 numeric_data = [column for column in column_headings if column not in non_numeric_data]
