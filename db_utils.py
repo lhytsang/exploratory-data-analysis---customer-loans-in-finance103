@@ -55,11 +55,10 @@ cleaned_data = DataTransform(database)
 date_data = ['issue_date', 'earliest_credit_line', 'last_payment_date', 'next_payment_date',
              'last_credit_pull_date']
 
-categorical_data = ['member_id', 'grade', 'sub_grade', 'employment_length', 'home_ownership', 'verification_status', 'loan_status', 
+categorical_data = ['member_id', 'term', 'grade', 'sub_grade', 'employment_length', 'home_ownership', 'verification_status', 'loan_status', 
                     'payment_plan', 'purpose', 'policy_code', 'application_type']
 
-new_column = [re.sub('\D', '', str(string).replace(' ', '')) for string in database['term']]
-database['term'] = new_column
+database['term'] = [re.sub('\D', '', str(string).replace(' ', '')) for string in database['term']]
 
 non_numeric_data = date_data + categorical_data 
 column_headings = database.columns.values.tolist()
