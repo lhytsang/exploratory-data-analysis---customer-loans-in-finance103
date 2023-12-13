@@ -35,8 +35,8 @@ class DataTransform:
 
         return dataframe_column
     
-    def date_data(self,  dataframe_column):
-        dataframe_column = pd.to_datetime(dataframe_column, format = 'mixed')
+    def date_data(self, dataframe, dataframe_column):
+        dataframe[dataframe_column] = pd.to_datetime(dataframe[dataframe_column], format = 'mixed')
 
         return dataframe_column
 
