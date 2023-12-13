@@ -31,10 +31,10 @@ class DataTransform:
 
         return dataframe, column_name
     
-    def change_type(self, dataframe_column, data_type):
-        dataframe_column = dataframe_column.astype(data_type)
+    def change_type(self, dataframe, dataframe_column, data_type):
+        dataframe[dataframe_column] = dataframe[dataframe_column].astype(data_type)
 
-        return dataframe_column
+        return dataframe, dataframe_column
     
     def date_data(self, dataframe, dataframe_column):
         dataframe[dataframe_column] = pd.to_datetime(dataframe[dataframe_column], format = 'mixed')
@@ -74,7 +74,8 @@ for date_column in date_data:
     database, date_column = cleaned_data.date_data(database, date_column)
 
 for numeric_column in numeric_data:
-    database, numeric_column = cleaned_data.fill_zeros(database, numeric_column)
+    database, numeric_column = cleaned_data.fill_zeros(database, numeric_column).change_type(database, numeric_column, 'float')
+
 
 print(database['term'].head())
 print(database.info())
