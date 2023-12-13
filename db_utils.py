@@ -54,17 +54,15 @@ cleaned_data = DataTransform(database)
 date_data = ['issue_date', 'earliest_credit_line', 'last_payment_date', 'next_payment_date',
              'last_credit_pull_date']
 
-categorical_data = ['grade', 'sub_grade', 'home_ownership', 'verification_status', 'loan_status', 
+categorical_data = ['grade', 'sub_grade', 'employment_length', 'home_ownership', 'verification_status', 'loan_status', 
                     'payment_plan', 'purpose', 'policy_code', 'application_type']
 fixed_data = ['id', 'member_id']
-string_data = ['term', 'employment_length']
 
-for str_columns in string_data:
-    new_column = []
-    for string in database[str_columns]:
-        string = re.sub('\D', '', str(string).replace(' ', ''))
-        new_column.append(string)
-    database[str_columns] = new_column
+new_column = []
+for string in database['term']:
+    string = re.sub('\D', '', str(string).replace(' ', ''))
+    new_column.append(string)
+database['term'] = new_column
 
 non_numeric_data = date_data + categorical_data + fixed_data
 column_headings = database.columns.values.tolist()
@@ -76,6 +74,4 @@ for date_column in date_data:
 for numeric_column in numeric_data:
     database, numeric_column = cleaned_data.fill_zeros(database, numeric_column).change_type(database, numeric_column, 'float')
 
-
-print(database['term'].head())
 print(database.info())
