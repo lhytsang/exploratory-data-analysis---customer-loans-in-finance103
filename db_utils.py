@@ -35,8 +35,8 @@ class DataTransform:
 
         return dataframe_column
     
-    def date_data(self, dataframe, dataframe_column):
-        dataframe_column = pd.to_datetime(dataframe[dataframe_column], format = 'mixed')
+    def date_data(self,  dataframe_column):
+        dataframe_column = pd.to_datetime(dataframe_column, format = 'mixed')
 
         return dataframe_column
 
@@ -62,5 +62,8 @@ numeric_data = [column for column in column_headings if column not in non_numeri
 
 for date_column in date_data:
     database[date_column] = cleaned_data.date_data(database, date_column)
+
+for numeric_column in numeric_data:
+    database[numeric_column] = cleaned_data.fill_zeros(numeric_column)
 
 print(database.info())
