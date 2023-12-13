@@ -72,6 +72,5 @@ for date_column in date_data:
 
 for numeric_column in numeric_data:
     database[numeric_column] = cleaned_data.fill_zeros(database, numeric_column)
-    print(numeric_column)
 
 print(database.info())
