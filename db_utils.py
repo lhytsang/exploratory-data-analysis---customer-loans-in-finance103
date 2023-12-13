@@ -47,6 +47,9 @@ class DataFrameInfo:
     def __init__(self, dataframe):
         self.dataframe = dataframe
 
+    def info(self, dataframe):
+        return dataframe.info()
+
 credentials = RDSDatabaseConnector(credentials_dict)
 loan_payments = credentials.initialise_database()
 
