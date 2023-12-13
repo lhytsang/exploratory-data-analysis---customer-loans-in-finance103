@@ -49,6 +49,11 @@ class DataFrameInfo:
 
     def info(self, dataframe):
         return dataframe.info()
+    
+    def unique_vals(self, dataframe, dataframe_column):
+        distinct_values = dataframe[dataframe_column].unique()
+
+        return distinct_values
 
 credentials = RDSDatabaseConnector(credentials_dict)
 loan_payments = credentials.initialise_database()
