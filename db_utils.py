@@ -60,8 +60,11 @@ fixed_data = ['id', 'member_id']
 string_data = ['term', 'employment_length']
 
 for str_columns in string_data:
+    new_column = []
     for string in database[str_columns]:
-        string = re.sub('\D', '', str(string))
+        string = re.sub('\D', '', str(string).replace(' ', ''))
+        new_column.append(string)
+    database[str_columns] = new_column
 
 non_numeric_data = date_data + categorical_data + fixed_data
 column_headings = database.columns.values.tolist()
