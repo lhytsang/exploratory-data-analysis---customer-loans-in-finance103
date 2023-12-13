@@ -36,7 +36,7 @@ class DataTransform:
         return dataframe_column
     
     def date_data(self, dataframe, dataframe_column):
-        dataframe.dataframe_column = pd.to_datetime(dataframe.dataframe_column)
+        dataframe.dataframe_column = pd.to_datetime(dataframe.dataframe_column, format = 'mixed')
 
         return dataframe
 
@@ -60,10 +60,7 @@ non_numeric_data = date_data + categorical_data
 column_headings = database.columns.values.tolist()
 numeric_data = [column for column in column_headings if column not in non_numeric_data]
 
-#for item in database['term']:
-#    item = item.replace('month', '')
-
 for date_column in date_data:
-    database[date_column] = pd.to_datetime(database[date_column], format = 'mixed')  
+    database[date_column] = cleaned_data.date_data(database, date_column)
 
 print(database.info())
