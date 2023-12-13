@@ -60,7 +60,6 @@ categorical_data = ['grade', 'sub_grade', 'home_ownership', 'verification_status
 #    item = item.replace('month', '')
 
 for date_column in date_data:
-    for date in database[date_column]:
-        date = pd.to_datetime(date, errors = 'coerce')
+    database[date_column] = pd.to_datetime(database[date_column], format = 'mixed')  
 
 print(database.info())
