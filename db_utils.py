@@ -27,8 +27,11 @@ class DataTransform:
     def __init__(self, dataframe):
         self.dataframe = dataframe
 
-    def fill_zeros(self, dataframe, column_name):
-        dataframe[column_name] = dataframe[column_name].fillna(0)
+    def fill_empty(self, dataframe, column_name, data_type):
+        if data_type == 'numeric':
+            dataframe[column_name] = dataframe[column_name].fillna(np.nan)
+        else:
+            dataframe[column_name] = dataframe[column_name].fillna(None)
 
         return dataframe, column_name
     
@@ -87,7 +90,8 @@ for date_column in date_data:
     database, date_column = cleaned_data.date_data(database, date_column)
 
 for numeric_column in numeric_data:
-    database, numeric_column = cleaned_data.fill_zeros(database, numeric_column)
+    database, numeric_column = cleaned_data.fill_empty(database, numeric_column, 'numeric')
 
 for categories in categorical_data:
     database, categories = cleaned_data.change_type(database, categories, 'category')
+    database, categories = cleaned_data.fill_empty(database, categories, 'category')
