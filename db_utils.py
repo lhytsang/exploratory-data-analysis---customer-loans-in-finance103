@@ -1,6 +1,7 @@
 import pandas as pd
 import sqlalchemy 
 import yaml
+import numpy as np
 import re
 
 with open('credentials.yaml') as file:
@@ -69,5 +70,8 @@ for date_column in date_data:
 
 for numeric_column in numeric_data:
     database, numeric_column = cleaned_data.fill_zeros(database, numeric_column)
+
+for categories in categorical_data:
+    database, categories = cleaned_data.change_type(database, categories, 'category')
 
 print(database.info())
