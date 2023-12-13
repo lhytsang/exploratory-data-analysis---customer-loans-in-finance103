@@ -41,6 +41,11 @@ class DataTransform:
         dataframe[dataframe_column] = pd.to_datetime(dataframe[dataframe_column], format = 'mixed')
 
         return dataframe, dataframe_column
+    
+class DataFrameInfo:
+
+    def __init__(self, dataframe):
+        self.dataframe = dataframe
 
 credentials = RDSDatabaseConnector(credentials_dict)
 loan_payments = credentials.initialise_database()
