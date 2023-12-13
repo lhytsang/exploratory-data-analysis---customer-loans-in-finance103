@@ -67,15 +67,11 @@ non_numeric_data = date_data + categorical_data + fixed_data
 column_headings = database.columns.values.tolist()
 numeric_data = [column for column in column_headings if column not in non_numeric_data]
 
-print(numeric_data)
-print(database.info())
-
 for date_column in date_data:
     database, date_column = cleaned_data.date_data(database, date_column)
-
-print(database.info())
 
 for numeric_column in numeric_data:
     database, numeric_column = cleaned_data.fill_zeros(database, numeric_column)
 
-#print(database.info())
+print(database['term'].head())
+print(database.info())
