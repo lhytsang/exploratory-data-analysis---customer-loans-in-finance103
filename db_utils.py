@@ -57,6 +57,9 @@ class DataFrameInfo:
         distinct_values = dataframe[dataframe_column].unique()
 
         return distinct_values
+    
+    def dataframe_shape(self, dataframe):
+        return dataframe.shape()
 
 credentials = RDSDatabaseConnector(credentials_dict)
 loan_payments = credentials.initialise_database()
