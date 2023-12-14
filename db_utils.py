@@ -20,13 +20,6 @@ class DataTransform:
 
     def __init__(self, dataframe):
         self.dataframe = dataframe
-
-#    def fill_empty(self, dataframe, column_name, data_type):
-#        if data_type == 'numeric':
-#            dataframe[column_name] = dataframe[column_name].fillna(0)
-#        else:
-#            dataframe[column_name] = dataframe[column_name].fillna(np.nan)
-#        return dataframe, column_name
     
     def change_type(self, dataframe, dataframe_column, data_type):
         dataframe[dataframe_column] = dataframe[dataframe_column].astype(data_type)
