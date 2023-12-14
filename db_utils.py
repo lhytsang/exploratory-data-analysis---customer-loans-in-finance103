@@ -68,5 +68,10 @@ class Plotter:
     def __init__(self, dataframe):
         self.dataframe = dataframe
 
+class DataFrameTransform:
+
+    def __init__(self, dataframe): 
+        self.dataframe = dataframe
+
 def load_csv(file):
     return pd.read_csv(file)
