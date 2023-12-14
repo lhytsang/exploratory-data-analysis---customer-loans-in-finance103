@@ -63,6 +63,13 @@ class DataFrameInfo:
     
     def dataframe_shape(self, dataframe):
         return dataframe.shape()
+    
+    def missing(self, dataframe, dataframe_column, data_type):
+        count = dataframe[dataframe_column].isna().sum()
+        percentage_count = (count/len(dataframe_column)) *100
+
+        return count, percentage_count
+        
 
 credentials = RDSDatabaseConnector(credentials_dict)
 loan_payments = credentials.initialise_database()
