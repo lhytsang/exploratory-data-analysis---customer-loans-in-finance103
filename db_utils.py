@@ -48,7 +48,7 @@ class DataFrameInfo:
         return distinct_values
     
     def dataframe_shape(self, dataframe):
-        return dataframe.shape()
+        return dataframe.shape
     
     def missing(self, dataframe, dataframe_column):
         count = dataframe[dataframe_column].isna().sum()
