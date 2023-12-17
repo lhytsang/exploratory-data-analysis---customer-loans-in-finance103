@@ -13,8 +13,8 @@ class RDSDatabaseConnector:
 
         return df
     
-    def save_file(self, dataframe):
-        dataframe.to_csv('new_file.csv')
+    def save_file(self, dataframe, filename):
+        dataframe.to_csv(filename)
 
 class DataTransform:
 
@@ -66,7 +66,7 @@ class DataFrameTransform:
     def __init__(self, dataframe): 
         self.dataframe = dataframe
     
-    
+
 
 def load_csv(file):
     return pd.read_csv(file)
