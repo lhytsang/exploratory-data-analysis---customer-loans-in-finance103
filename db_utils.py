@@ -71,7 +71,7 @@ class Plotter:
     def __init__(self, dataframe):
         self.dataframe = dataframe
 
-    def plot_missing(dataframe):
+    def plot_missing(self, dataframe):
         column_headings = dataframe.columns.values.tolist()
         null_values = []
         for columns in column_headings:
