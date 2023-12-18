@@ -81,7 +81,7 @@ class Plotter:
         plt.show()
 
     def plot_hist(self, dataframe_column):
-        plt.hist(dataframe_column)
+        plt.hist(dataframe_column, bins= 10)
         plt.title(str(dataframe_column))
         plt.show()
 
