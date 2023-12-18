@@ -82,6 +82,7 @@ class Plotter:
 
     def plot_hist(self, dataframe_column):
         plt.hist(dataframe_column)
+        plt.title(str(dataframe_column))
         plt.show()
 
 def load_csv(file):
