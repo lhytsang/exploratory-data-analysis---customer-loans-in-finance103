@@ -1,5 +1,4 @@
-import pandas as pd
-import sqlalchemy 
+import pandas as pd, sqlalchemy, matplotlib.pyplot as plt
 
 class RDSDatabaseConnector:
   
@@ -71,6 +70,16 @@ class Plotter:
 
     def __init__(self, dataframe):
         self.dataframe = dataframe
+
+    def plot_missing(dataframe):
+        column_headings = dataframe.columns.values.tolist()
+        null_values = []
+        for columns in column_headings:
+            null_values.append(dataframe[columns].isna().sum())
+
+        plt.bar(column_headings, null_values)
+        plt.show()
+
 
 def load_csv(file):
     return pd.read_csv(file)
