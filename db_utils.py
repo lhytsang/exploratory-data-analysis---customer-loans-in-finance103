@@ -1,4 +1,4 @@
-import pandas as pd, sqlalchemy, matplotlib.pyplot as plt
+import pandas as pd, sqlalchemy, matplotlib.pyplot as plt, seaborn as sns, numpy as np
 
 class RDSDatabaseConnector:
   
@@ -82,6 +82,10 @@ class Plotter:
 
     def plot_hist(self, dataframe):
         dataframe.hist()
+
+    def log_correct_skew(self, dataframe, dataframe_column):
+        log_column = dataframe[dataframe_column].map(lambda i: np.log(i) if i > 0 else 0)
+        t = sns.histplot(log_column, label = 'Skewness: %.2f'%(log_column.skew()))
 
 def load_csv(file):
     return pd.read_csv(file, index_col='id')
