@@ -70,3 +70,6 @@ class DataFrameTransform:
 
 def load_csv(file):
     return pd.read_csv(file)
+
+def make_list(dataframe, column):
+    return list(dataframe[column])
