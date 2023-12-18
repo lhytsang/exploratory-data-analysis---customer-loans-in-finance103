@@ -8,7 +8,7 @@ class RDSDatabaseConnector:
     def initialise_database(self):
         engine = sqlalchemy.create_engine(f"postgresql://{self.credentials['RDS_USER']}:{self.credentials['RDS_PASSWORD']}@{self.credentials['RDS_HOST']}:{self.credentials['RDS_PORT']}/{self.credentials['RDS_DATABASE']}")
         sql = "SELECT * FROM loan_payments"
-        df = pd.read_sql(sql, con = engine)
+        df = pd.read_sql(sql, con = engine, index_col='id')
 
         return df
     
@@ -82,7 +82,7 @@ class Plotter:
 
 
 def load_csv(file):
-    return pd.read_csv(file)
+    return pd.read_csv(file, index_col='id')
 
 def make_list(dataframe, column):
     return list(dataframe[column])
