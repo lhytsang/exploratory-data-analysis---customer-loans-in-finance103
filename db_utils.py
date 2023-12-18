@@ -80,9 +80,8 @@ class Plotter:
         plt.bar(column_headings, null_values)
         plt.show()
 
-    def plot_hist(self, dataframe, dataframe_column):
-        dataframe[dataframe_column].hist(bins = 20)
-        plt.title(str(dataframe_column))
+    def plot_hist(self, dataframe):
+        dataframe.hist()
 
 def load_csv(file):
     return pd.read_csv(file, index_col='id')
