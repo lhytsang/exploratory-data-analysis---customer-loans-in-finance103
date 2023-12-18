@@ -81,7 +81,7 @@ class Plotter:
         plt.show()
 
     def plot_hist(self, dataframe, dataframe_column):
-        dataframe[dataframe_column].hist(bins = 50)
+        dataframe[dataframe_column].hist(bins = 20)
         plt.title(str(dataframe_column))
 
 def load_csv(file):
