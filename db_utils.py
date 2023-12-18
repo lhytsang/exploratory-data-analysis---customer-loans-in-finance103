@@ -67,7 +67,6 @@ class DataFrameTransform:
         self.dataframe = dataframe
     
 
-
 def load_csv(file):
     return pd.read_csv(file, index_col='id')
 
