@@ -83,8 +83,8 @@ class Plotter:
     def plot_hist(self, dataframe):
         dataframe.hist()
 
-    def log_correct_skew(self, dataframe_column):
-        sns.histplot(dataframe_column, label = 'Skewness: %.2f'%(dataframe_column.skew()))
+    def log_correct_skew(self, dataframe):
+        sns.histplot(dataframe)
 
 def load_csv(file):
     return pd.read_csv(file, index_col='id')
