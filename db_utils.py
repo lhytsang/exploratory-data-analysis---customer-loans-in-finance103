@@ -55,6 +55,10 @@ class DataFrameInfo:
         percentage_count = round(percentage_count, 2)
 
         return count, percentage_count
+    
+    def print_skew(self, dataframe, dataframe2):
+        for skew_col, value in dataframe2.items():
+            print(f'{skew_col}\n Skew before: {dataframe.get(key = skew_col)}\n Skew after: {dataframe2.get(key = skew_col)}')
 
 class DataFrameTransform:
 
