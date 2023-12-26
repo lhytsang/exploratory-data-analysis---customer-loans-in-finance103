@@ -69,6 +69,18 @@ class DataFrameTransform:
         dataframe = dataframe.fillna(value = values)
 
         return dataframe
+    
+    def compare(self, dataframe, dataframe2):
+        new_dict = {}
+        for column in dataframe:
+            if dataframe[column] < dataframe2[column]:
+                new_dict[column] = dataframe
+            elif dataframe2[column] < dataframe[column]:
+                new_dict[column] = dataframe
+            else: 
+                new_dict[column] = dataframe
+        
+        return new_dict
 
 class Plotter:
 
