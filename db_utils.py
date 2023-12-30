@@ -69,18 +69,6 @@ class DataFrameTransform:
         dataframe = dataframe.fillna(value = values)
 
         return dataframe
-    
-    def compare(self, dataframe, dataframe2):
-        new_df = dataframe.copy()
-        for column in dataframe:
-            if dataframe[column] < dataframe2[column]:
-                new_df[column] = dataframe
-            elif dataframe2[column] < dataframe[column]:
-                new_df[column] = dataframe2
-            else: 
-                new_df[column] = dataframe
-        
-        return new_df
 
 class Plotter:
 
