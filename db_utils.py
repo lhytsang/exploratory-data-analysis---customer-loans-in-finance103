@@ -83,6 +83,17 @@ class DataFrameTransform:
 
         return dataframe
     
+    def boxcox_transform(self, dataframe):
+        for column in dataframe.columns:
+            for element in dataframe[column].values:
+                if element % 10 == 0:
+                    dataframe = dataframe.drop(columns = column)
+                    break
+            
+            dataframe[column] = stats.boxcox(dataframe[column])[0]
+        
+        return dataframe
+    
 class Plotter:
 
     def __init__(self, dataframe):
