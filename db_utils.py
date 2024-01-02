@@ -1,4 +1,5 @@
-import pandas as pd, sqlalchemy, matplotlib.pyplot as plt
+import pandas as pd, sqlalchemy, matplotlib.pyplot as plt, numpy as np
+from scipy import stats
 
 class RDSDatabaseConnector:
   
@@ -70,6 +71,12 @@ class DataFrameTransform:
 
         return dataframe
 
+    def log_transform(self, dataframe):
+        for column in dataframe.columns:
+            dataframe[column] = dataframe[column].map(lambda i: np.log(i) if i > 0 else 0)
+        
+        return dataframe
+    
 class Plotter:
 
     def __init__(self, dataframe):
