@@ -77,6 +77,12 @@ class DataFrameTransform:
         
         return dataframe
     
+    def yeojohnson_transform(self, dataframe):
+        for column in dataframe.columns:
+            dataframe[column] = stats.yeojohnson(dataframe[column])[0]
+
+        return dataframe
+    
 class Plotter:
 
     def __init__(self, dataframe):
