@@ -113,12 +113,7 @@ class Plotter:
         dataframe.hist()
 
     def plot_boxplot(self, dataframe):
-        for column in dataframe:
-            plt.figure(figsize=(10, 5))
-            sns.boxplot(y=column, color='lightgreen', showfliers=True)
-            sns.swarmplot(y=column, color='black', size=5)
-            plt.title(f'Box plot of {column}')
-            plt.show()
+        dataframe.boxplot(column=[col for col in dataframe.columns])
 
 def load_csv(file):
     return pd.read_csv(file, index_col='id')
