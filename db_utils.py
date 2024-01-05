@@ -1,4 +1,4 @@
-import pandas as pd, sqlalchemy, matplotlib.pyplot as plt, numpy as np
+import pandas as pd, sqlalchemy, matplotlib.pyplot as plt, numpy as np, seaborn as sns
 from scipy import stats
 
 class RDSDatabaseConnector:
@@ -110,6 +110,14 @@ class Plotter:
 
     def plot_hist(self, dataframe):
         dataframe.hist()
+
+    def plot_boxplot(self, dataframe):
+        for column in dataframe:
+            plt.figure(figsize=(10, 5))
+            sns.boxplot(y=column, color='lightgreen', showfliers=True)
+            sns.swarmplot(y=column, color='black', size=5)
+            plt.title(f'Box plot of {column}')
+            plt.show()
 
 def load_csv(file):
     return pd.read_csv(file, index_col='id')
