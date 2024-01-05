@@ -89,7 +89,8 @@ class DataFrameTransform:
                 if element % 10 == 0:
                     dataframe = dataframe.drop(columns = column)
                     break
-            
+
+        for column in dataframe.columns:    
             dataframe[column] = stats.boxcox(dataframe[column])[0]
         
         return dataframe
