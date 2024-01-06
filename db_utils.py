@@ -112,8 +112,9 @@ class Plotter:
     def plot_hist(self, dataframe):
         dataframe.hist()
 
-    def plot_boxplot(self, dataframe):
-        dataframe.boxplot(column=[col for col in dataframe.columns])
+    def plot_boxplot(self, dataframe, df_column):
+        ax = dataframe.plot.box(column = df_column)
+        plt.title(f'{df_column} Data Distribution')
 
 def load_csv(file):
     return pd.read_csv(file, index_col='id')
