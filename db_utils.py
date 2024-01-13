@@ -60,7 +60,7 @@ class DataFrameInfo:
     def print_skew(self, dataframe, dataframe2):
         df1_skew = dataframe.skew(axis= 0, numeric_only= True)
         df2_skew = dataframe2.skew(axis= 0, numeric_only= True)
-        for skew_col, value in dataframe2.columns:
+        for skew_col in dataframe2.columns:
             print(f'{skew_col}\n Skew before: {df1_skew[skew_col]}\n Skew after: {df2_skew[skew_col]}')
 
 class DataFrameTransform:
