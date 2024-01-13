@@ -58,8 +58,10 @@ class DataFrameInfo:
         return count, percentage_count
     
     def print_skew(self, dataframe, dataframe2):
-        for skew_col, value in dataframe2.items():
-            print(f'{skew_col}\n Skew before: {dataframe.get(key = skew_col)}\n Skew after: {dataframe2.get(key = skew_col)}')
+        df1_skew = dataframe.skew(axis= 0, numeric_only= True)
+        df2_skew = dataframe2.skew(axis= 0, numeric_only= True)
+        for skew_col, value in dataframe2.column:
+            print(f'{skew_col}\n Skew before: {df1_skew[skew_col]}\n Skew after: {df2_skew[skew_col]}')
 
 class DataFrameTransform:
 
