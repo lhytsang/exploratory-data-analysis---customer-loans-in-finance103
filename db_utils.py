@@ -52,7 +52,7 @@ class DataFrameInfo:
     
     def missing(self, dataframe, dataframe_column):
         count = dataframe[dataframe_column].isna().sum()
-        percentage_count = (count/54231) * 100
+        percentage_count = (count/len(dataframe.columns)) * 100
         percentage_count = round(percentage_count, 2)
 
         return count, percentage_count
