@@ -121,6 +121,11 @@ class Plotter:
         ax = dataframe.plot.box(column = df_column)
         plt.title(f'{df_column} Data Distribution')
 
+    def plot_scatter(self, dataframe, df_column):
+        x = np.linspace(0, max(df_column))
+        y = df_column
+        plt.scatter(x, y)
+
 def load_csv(file):
     return pd.read_csv(file, index_col='id')
 
