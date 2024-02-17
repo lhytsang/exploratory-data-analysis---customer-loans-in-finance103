@@ -101,11 +101,42 @@ class DataFrameTransform:
         return dataframe
     
 class Plotter:
+    '''
+    A class used to print graphs of the data.
 
+    
+    Attributes
+    ----------
+    Dataframe: Pandas dataframe
+        a table containing the data of all members and their financial details
+
+
+    Methods
+    -------
+    plot_missing(dataframe)
+        Creates a bar chart of how many null values there are in each column
+    
+    plot_hist(dataframe)
+        Creates a histogram for each column in the dataframe
+
+    plot_boxplot(dataframe, df_column)
+        Creates a boxplot of the data in the column df_column of the dataframe
+
+    plot_scatter(dataframe, df_column)
+        Plots a scatter graph of the data in the column df_column of the dataframe
+
+    '''
     def __init__(self, dataframe):
         self.dataframe = dataframe
 
     def plot_missing(self, dataframe):
+        '''
+        Plot the missing values of the dataframe in a bar chart
+
+        Parameters: dataframe
+            The dataframe which we want to find the amount of missing values in
+        '''
+        
         column_headings = dataframe.columns.values.tolist()
         null_values = []
         for columns in column_headings:
