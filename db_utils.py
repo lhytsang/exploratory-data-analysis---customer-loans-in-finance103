@@ -1,4 +1,4 @@
-import pandas as pd, sqlalchemy, matplotlib.pyplot as plt, numpy as np, plotly.express as px
+import pandas as pd, sqlalchemy, matplotlib.pyplot as plt, numpy as np
 from scipy import stats
 
 class RDSDatabaseConnector:
@@ -158,18 +158,6 @@ class Plotter:
         x = np.linspace(0, max(column_data))
         y = column_data
         plt.scatter(x, y, title = df_column)
-
-    def recovered_payments(self, dataframe, df_column, chart_title):
-        recovered_payments = unrecovered_payments = 0
-
-        for element in dataframe[df_column]:
-            if element > 0:
-                unrecovered_payments += 1
-            else:
-                recovered_payments += 1
-
-        fig = px.pie(values=[unrecovered_payments, recovered_payments], names=['Unrecovered payments', 'Recovered payments'], title=chart_title)
-        fig.show()
 
 def load_csv(file):
     return pd.read_csv(file, index_col='id')
