@@ -3,9 +3,9 @@
 why used technologies used, issues faced, hope to implement...
 
 ## Installation
-First, ensure that Python is installed correctly on your device as well as pip. To ensure that the necessary packages are also installed, type the following into the command line:
+First, ensure that Anaconda is installed correctly on your device (alternatively, downloading Python and ensuring pip works is also possible although a virtual environment is usually created to avoid needing to download packages gloablly). To ensure that the necessary packages are also installed, type the following into the command line:
 ```
-pip install pandas sqlalchemy pyyaml psycopg2-binary
+pip install ipykernel pandas sqlalchemy pyyaml psycopg2-binary scipy numpy plotly matplotlib
 ```
 ## Usage
 
