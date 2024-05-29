@@ -3,7 +3,7 @@
 why used technologies used, issues faced, hope to implement...
 
 ## Installation
-First, to ensure that the necessary packages are installed and the code can run, type the following command into the command line:
+First, ensure that Python is installed correctly on your device as well as pip. To ensure that the necessary packages are also installed, type the following into the command line:
 ```
 pip install pandas sqlalchemy pyyaml psycopg2-binary
 ```
