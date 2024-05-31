@@ -160,7 +160,7 @@ class Plotter:
         plt.scatter(x, y, title = df_column)
 
 def load_csv(file):
-    return pd.read_csv(file)
+    return pd.read_csv(file, index_col=[0])
 
 def make_list(dataframe, column):
     return list(dataframe[column])
