@@ -77,26 +77,26 @@ class DataFrameTransform:
         return dataframe
 
     def log_transform(self, dataframe):
-        for column in dataframe.columns:
-            dataframe.loc[:,column] = (dataframe[[column]].map(lambda i: np.log(i) if i > 0 else 0)).copy()
+        for column, col_data in dataframe.items():
+            dataframe[column] = (dataframe[[column]].map(lambda i: np.log(i) if i > 0 else 0)).copy()
         
         return dataframe
     
     def yeojohnson_transform(self, dataframe):
-        for column in dataframe.columns:
-            dataframe.loc[:,column] = (stats.yeojohnson(dataframe[column])[0]).copy()
+        for column, col_data in dataframe.items():
+            dataframe[column] = (stats.yeojohnson(dataframe[column])[0]).copy()
 
         return dataframe
     
     def boxcox_transform(self, dataframe):
-        for column in dataframe.columns:
+        for column, col_data in dataframe.items():
             for element in dataframe[column].values:
                 if element % 10 == 0:
                     dataframe = dataframe.drop(columns = column)
                     break
 
-        for column in dataframe.columns:    
-            dataframe.loc[:,column]  = (stats.boxcox(dataframe[column])[0]).copy()
+        for column, col_data in dataframe.items():    
+            dataframe[column]  = (stats.boxcox(dataframe[column])[0]).copy()
         
         return dataframe
     
