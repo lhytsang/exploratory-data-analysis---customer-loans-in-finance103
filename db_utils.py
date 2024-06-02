@@ -2,7 +2,20 @@ import pandas as pd, sqlalchemy, matplotlib.pyplot as plt, numpy as np
 from scipy import stats
 
 class RDSDatabaseConnector:
-  
+    '''
+    A class used to extract the data from a specific website.
+
+    
+    Attributes
+    ----------
+    
+
+
+    Methods
+    -------
+    
+
+    '''
     def __init__(self, credentials):
         self.credentials = credentials
 
@@ -20,7 +33,21 @@ class RDSDatabaseConnector:
         return pd.read_csv(file, index_col=[0])
 
 class DataTransform:
+    '''
+    A class used to alter the data of a dataframe.
 
+    
+    Attributes
+    ----------
+    Dataframe: Pandas dataframe
+        a table containing the data of all members and their financial details
+
+
+    Methods
+    -------
+    
+
+    '''
     def __init__(self, dataframe):
         self.dataframe = dataframe
     
@@ -38,7 +65,22 @@ class DataTransform:
         return list(dataframe[column])
     
 class DataFrameInfo:
+    '''
+    A class used to find out information about a dataframe.
 
+    
+    Attributes
+    ----------
+    Dataframe: Pandas dataframe
+        a table containing the data of all members and their financial details
+
+
+    Methods
+    -------
+    
+    
+
+    '''
     def __init__(self, dataframe):
         self.dataframe = dataframe
 
@@ -73,7 +115,31 @@ class DataFrameInfo:
         print('\n\n')
 
 class DataFrameTransform:
+    '''
+    A class used to change and alter the data within a dataframe.
 
+    
+    Attributes
+    ----------
+    Dataframe: Pandas dataframe
+        a table containing the data of all members and their financial details
+
+
+    Methods
+    -------
+    plot_missing(dataframe)
+        Creates a bar chart of how many null values there are in each column
+    
+    plot_hist(dataframe)
+        Creates a histogram for each column in the dataframe
+
+    plot_boxplot(dataframe, df_column)
+        Creates a boxplot of the data in the column df_column of the dataframe
+
+    plot_scatter(dataframe, df_column)
+        Plots a scatter graph of the data in the column df_column of the dataframe
+
+    '''
     def __init__(self, dataframe): 
         self.dataframe = dataframe
     
