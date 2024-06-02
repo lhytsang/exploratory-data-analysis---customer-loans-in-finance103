@@ -16,6 +16,9 @@ class RDSDatabaseConnector:
     def save_file(self, dataframe, filename):
         dataframe.to_csv(filename)
 
+    def load_csv(self, file):
+        return pd.read_csv(file, index_col=[0])
+
 class DataTransform:
 
     def __init__(self, dataframe):
@@ -30,6 +33,9 @@ class DataTransform:
         dataframe[dataframe_column] = pd.to_datetime(dataframe[dataframe_column], format = 'mixed')
 
         return dataframe, dataframe_column
+    
+    def make_list(self, dataframe, column):
+        return list(dataframe[column])
     
 class DataFrameInfo:
 
@@ -159,8 +165,3 @@ class Plotter:
         y = column_data
         plt.scatter(x, y, title = df_column)
 
-def load_csv(file):
-    return pd.read_csv(file, index_col=[0])
-
-def make_list(dataframe, column):
-    return list(dataframe[column])
