@@ -135,23 +135,32 @@ class DataFrameTransform:
     def fill_null(self, values):
         self.df = self.df.fillna(value = values)
     
-    def log_transform(self):
-        for df_column, col_data in self.df.items():
-            self.df[df_column] = (self.df[[df_column]].map(lambda i: np.log(i) if i > 0 else 0)).copy()
+    @staticmethod
+    def log_transform(df):
+        for df_column, col_data in df.items():
+            df[df_column] = (df[[df_column]].map(lambda i: np.log(i) if i > 0 else 0)).copy()
     
-    def yeojohnson_transform(self):
-        for df_column, col_data in self.df.items():
-            self.df[df_column] = (stats.yeojohnson(self.df[df_column])[0]).copy()
+        return df
     
-    def boxcox_transform(self):
-        for df_column, col_data in self.df.items():
-            for element in self.df[df_column].values:
+    @staticmethod
+    def yeojohnson_transform(df):
+        for df_column, col_data in df.items():
+            df[df_column] = (stats.yeojohnson(df[df_column])[0]).copy()
+        
+        return df
+    
+    @staticmethod
+    def boxcox_transform(df):
+        for df_column, col_data in df.items():
+            for element in df[df_column].values:
                 if element % 10 == 0:
-                    self.df= self.df.drop(columns = df_column)
+                    df= df.drop(columns = df_column)
                     break
 
-        for df_column, col_data in self.df.items():    
-            self.df[df_column]  = (stats.boxcox(self.df[df_column])[0]).copy()
+        for df_column, col_data in df.items():    
+            df[df_column]  = (stats.boxcox(df[df_column])[0]).copy()
+
+        return df
     
 class Plotter:
     '''
