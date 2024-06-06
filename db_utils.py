@@ -89,8 +89,13 @@ class DataFrameInfo:
     def unique_vals(self, df_column):
         return self.df[df_column].unique()
     
-    def dataframe_shape(self):
-        return self.df.shape
+    def df_shape(self, dimension):
+        if dimension == 0 or dimension == 'rows':
+            return self.df.shape[0]
+        elif dimension == 1 or dimension == 'columns':
+            return self.df.shape[1]
+        else:
+            return self.df.shape
     
     def missing(self, df_column):
         count = self.df[df_column].isna().sum()
