@@ -104,8 +104,9 @@ class DataFrameInfo:
 
         return count, percentage_count
     
-    def df_skew(self):
-        skew = {col: self.df[col].skew() for col in self.df.columns if self.df.dtypes[col] in ['float64', 'int64']}
+    @staticmethod
+    def df_skew(df):
+        skew = {df_column: df[df_column].skew() for df_column in df.columns if df.dtypes[df_column] in ['float64', 'int64']}
         return skew
     
     def print_skew(self):
