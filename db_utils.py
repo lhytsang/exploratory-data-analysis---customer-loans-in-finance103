@@ -26,8 +26,8 @@ class RDSDatabaseConnector:
 
         return df
     
-    def save_file(self, dataframe, filename):
-        dataframe.to_csv(filename)
+    def save_file(self, df, filename):
+        df.to_csv(filename)
 
     def load_csv(self, file):
         return pd.read_csv(file, index_col=[0])
@@ -48,21 +48,17 @@ class DataTransform:
     
 
     '''
-    def __init__(self, dataframe):
-        self.dataframe = dataframe
+    def __init__(self, df):
+        self.df = df
     
-    def change_type(self, dataframe, dataframe_column, data_type):
-        dataframe[dataframe_column] = dataframe[dataframe_column].astype(data_type)
-
-        return dataframe, dataframe_column
+    def change_type(self, df_column, data_type):
+        self.df[df_column] = self.df[df_column].astype(data_type)
     
-    def date_data(self, dataframe, dataframe_column):
-        dataframe[dataframe_column] = pd.to_datetime(dataframe[dataframe_column], format = 'mixed')
-
-        return dataframe, dataframe_column
+    def date_data(self, df_column):
+        self.df[df_column] = pd.to_datetime(self.df[df_column], format = 'mixed')
     
-    def make_list(self, dataframe, column):
-        return list(dataframe[column])
+    def make_list(self, df_column):
+        return list(self.df[df_column])
     
 class DataFrameInfo:
     '''
@@ -81,37 +77,35 @@ class DataFrameInfo:
     
 
     '''
-    def __init__(self, dataframe):
-        self.dataframe = dataframe
+    def __init__(self, df):
+        self.df = df
 
-    def info(self, dataframe):
-        return dataframe.info()
+    def info(self):
+        return self.df.info()
     
-    def stats(self, dataframe):
-        return dataframe.describe()
+    def stats(self):
+        return self.df.describe()
 
-    def unique_vals(self, dataframe, dataframe_column):
-        distinct_values = dataframe[dataframe_column].unique()
-
-        return distinct_values
+    def unique_vals(self, df_column):
+        return self.df[df_column].unique()
     
-    def dataframe_shape(self, dataframe):
-        return dataframe.shape
+    def dataframe_shape(self):
+        return self.df.shape
     
-    def missing(self, dataframe, dataframe_column):
-        count = dataframe[dataframe_column].isna().sum()
-        percentage_count = (count/dataframe.shape[0]) * 100
+    def missing(self, df_column):
+        count = self.df[df_column].isna().sum()
+        percentage_count = (count/self.df.shape[0]) * 100
         percentage_count = round(percentage_count, 2)
 
         return count, percentage_count
     
-    def df_skew(self, dataframe):
-        skew = {col: dataframe[col].skew() for col in dataframe.columns if dataframe.dtypes[col] in ['float64', 'int64']}
+    def df_skew(self):
+        skew = {col: self.df[col].skew() for col in self.df.columns if self.df.dtypes[col] in ['float64', 'int64']}
         return skew
     
-    def print_skew(self, dataframe):
-        for col, skew in self.df_skew(dataframe).items():
-            print(f'{col}: {skew}')
+    def print_skew(self):
+        for df_column, skew in self.df_skew(self.df).items():
+            print(f'{df_column}: {skew}')
         print('\n\n')
 
 class DataFrameTransform:
@@ -127,50 +121,32 @@ class DataFrameTransform:
 
     Methods
     -------
-    plot_missing(dataframe)
-        Creates a bar chart of how many null values there are in each column
     
-    plot_hist(dataframe)
-        Creates a histogram for each column in the dataframe
-
-    plot_boxplot(dataframe, df_column)
-        Creates a boxplot of the data in the column df_column of the dataframe
-
-    plot_scatter(dataframe, df_column)
-        Plots a scatter graph of the data in the column df_column of the dataframe
 
     '''
-    def __init__(self, dataframe): 
-        self.dataframe = dataframe
+    def __init__(self, df): 
+        self.df = df
     
-    def fill_null(self, dataframe, values):
-        dataframe = dataframe.fillna(value = values)
-
-        return dataframe
-
-    def log_transform(self, dataframe):
-        for column, col_data in dataframe.items():
-            dataframe[column] = (dataframe[[column]].map(lambda i: np.log(i) if i > 0 else 0)).copy()
-        
-        return dataframe
+    def fill_null(self, values):
+        self.df = self.df.fillna(value = values)
     
-    def yeojohnson_transform(self, dataframe):
-        for column, col_data in dataframe.items():
-            dataframe[column] = (stats.yeojohnson(dataframe[column])[0]).copy()
-
-        return dataframe
+    def log_transform(self):
+        for df_column, col_data in self.df.items():
+            self.df[df_column] = (self.df[[df_column]].map(lambda i: np.log(i) if i > 0 else 0)).copy()
     
-    def boxcox_transform(self, dataframe):
-        for column, col_data in dataframe.items():
-            for element in dataframe[column].values:
+    def yeojohnson_transform(self):
+        for df_column, col_data in self.df.items():
+            self.df[df_column] = (stats.yeojohnson(self.df[df_column])[0]).copy()
+    
+    def boxcox_transform(self):
+        for df_column, col_data in self.df.items():
+            for element in self.df[df_column].values:
                 if element % 10 == 0:
-                    dataframe = dataframe.drop(columns = column)
+                    self.df= self.df.drop(columns = df_column)
                     break
 
-        for column, col_data in dataframe.items():    
-            dataframe[column]  = (stats.boxcox(dataframe[column])[0]).copy()
-        
-        return dataframe
+        for df_column, col_data in self.df.items():    
+            self.df[df_column]  = (stats.boxcox(self.df[df_column])[0]).copy()
     
 class Plotter:
     '''
@@ -185,23 +161,23 @@ class Plotter:
 
     Methods
     -------
-    plot_missing(dataframe)
+    plot_missing()
         Creates a bar chart of how many null values there are in each column
     
-    plot_hist(dataframe)
+    plot_hist()
         Creates a histogram for each column in the dataframe
 
-    plot_boxplot(dataframe, df_column)
+    plot_boxplot(df_column)
         Creates a boxplot of the data in the column df_column of the dataframe
 
-    plot_scatter(dataframe, df_column)
+    plot_scatter(df_column)
         Plots a scatter graph of the data in the column df_column of the dataframe
 
     '''
-    def __init__(self, dataframe):
-        self.dataframe = dataframe
+    def __init__(self, df):
+        self.df = df
 
-    def plot_missing(self, dataframe):
+    def plot_missing(self):
         '''
         Plot the missing values of the dataframe in a bar chart
 
@@ -209,25 +185,25 @@ class Plotter:
             The dataframe which we want to find the amount of missing values in
         '''
         
-        column_headings = dataframe.columns.values.tolist()
+        column_headings = self.df.columns.values.tolist()
         null_values = []
         for columns in column_headings:
-            null_values.append(dataframe[columns].isna().sum())
+            null_values.append(self.df[columns].isna().sum())
 
         plt.bar(column_headings, null_values)
         plt.show()
 
-    def plot_hist(self, dataframe):
-        dataframe.hist()
+    def plot_hist(self):
+        self.df.hist()
 
-    def plot_boxplot(self, dataframe, df_column):
-        ax = dataframe.plot.box(column = df_column)
+    def plot_boxplot(self, df_column):
+        ax = self.df.plot.box(column = df_column)
         plt.title(f'{df_column} Data Distribution')
 
-    def plot_scatter(self, dataframe, df_column):
-        column_data = dataframe[df_column]
+    def plot_scatter(self, df_column):
+        col_data = self.df[df_column]
         
-        x = np.linspace(0, max(column_data))
-        y = column_data
+        x = np.linspace(0, max(col_data))
+        y = col_data
         plt.scatter(x, y, title = df_column)
 
