@@ -95,8 +95,8 @@ class DataFrameInfo:
         elif dimension == 1 or dimension == 'columns':
             return self.df.shape[1]
         else:
-            return self.df.shape
-    
+            return self.df.shape      
+
     def missing(self, df_column):
         count = self.df[df_column].isna().sum()
         percentage_count = (count/self.df.shape[0]) * 100
@@ -112,7 +112,6 @@ class DataFrameInfo:
     def print_skew(self):
         for df_column, skew in self.df_skew(self.df).items():
             print(f'{df_column}: {skew}')
-        print('\n\n')
 
 class DataFrameTransform:
     '''
@@ -138,27 +137,27 @@ class DataFrameTransform:
     
     @staticmethod
     def log_transform(df):
-        for df_column, col_data in df.items():
+        for df_column in df.columns:
             df[df_column] = (df[[df_column]].map(lambda i: np.log(i) if i > 0 else 0)).copy()
     
         return df
     
     @staticmethod
     def yeojohnson_transform(df):
-        for df_column, col_data in df.items():
+        for df_column in df.columns:
             df[df_column] = (stats.yeojohnson(df[df_column])[0]).copy()
         
         return df
     
     @staticmethod
     def boxcox_transform(df):
-        for df_column, col_data in df.items():
+        for df_column in df.columns:
             for element in df[df_column].values:
                 if element % 10 == 0:
                     df= df.drop(columns = df_column)
                     break
 
-        for df_column, col_data in df.items():    
+        for df_column in df.columns:    
             df[df_column]  = (stats.boxcox(df[df_column])[0]).copy()
 
         return df
