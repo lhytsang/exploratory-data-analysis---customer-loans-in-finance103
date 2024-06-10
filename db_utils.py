@@ -57,9 +57,6 @@ class DataTransform:
     def date_data(self, df_column):
         self.df[df_column] = pd.to_datetime(self.df[df_column], format = 'mixed')
     
-    def make_list(self, df_column):
-        return list(self.df[df_column])
-    
 class DataFrameInfo:
     '''
     A class used to find out information about a dataframe.
@@ -89,29 +86,33 @@ class DataFrameInfo:
     def unique_vals(self, df_column):
         return self.df[df_column].unique()
     
-    def df_shape(self, dimension):
+    @staticmethod
+    def df_shape(df, dimension):
         if dimension == 0 or dimension == 'rows':
-            return self.df.shape[0]
+            return df.shape[0]
         elif dimension == 1 or dimension == 'columns':
-            return self.df.shape[1]
+            return df.shape[1]
         else:
-            return self.df.shape      
+            return df.shape      
 
     def missing(self, df_column):
         count = self.df[df_column].isna().sum()
-        percentage_count = (count/self.df.shape[0]) * 100
+        percentage_count = (count/self.df_shape(self.df, 0)) * 100
         percentage_count = round(percentage_count, 2)
 
         return count, percentage_count
     
     @staticmethod
-    def df_skew(df):
+    def df_skew(df, print=0):
         skew = {df_column: df[df_column].skew() for df_column in df.columns if df.dtypes[df_column] in ['float64', 'int64']}
+        
+        if print == 1:
+            for df_col, skews in skew(df).items():
+                print(f'{df_col}: {skews}')
+        
         return skew
-    
-    def print_skew(self):
-        for df_column, skew in self.df_skew(self.df).items():
-            print(f'{df_column}: {skew}')
+
+
 
 class DataFrameTransform:
     '''
