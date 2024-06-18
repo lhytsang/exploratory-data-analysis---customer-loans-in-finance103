@@ -1,5 +1,5 @@
-import pandas as pd, sqlalchemy, matplotlib.pyplot as plt, numpy as np
 from scipy import stats
+import numpy as np, matplotlib.pyplot as plt, pandas as pd, sqlalchemy 
 
 class RDSDatabaseConnector:
     '''
@@ -26,11 +26,11 @@ class RDSDatabaseConnector:
 
         return df
     
-    def save_file(self, df, filename):
-        df.to_csv(filename)
-
     def load_csv(self, file):
         return pd.read_csv(file, index_col=[0])
+
+    def save_file(self, df, filename):
+        df.to_csv(filename)
 
 class DataTransform:
     '''
@@ -77,31 +77,10 @@ class DataFrameInfo:
     def __init__(self, df):
         self.df = df
 
-    def info(self):
-        return self.df.info()
-    
-    def stats(self):
-        return self.df.describe()
 
-    def unique_vals(self, df_column):
-        return self.df[df_column].unique()
-    
-    @staticmethod
-    def df_shape(df, dimension):
-        if dimension == 0 or dimension == 'rows':
-            return df.shape[0]
-        elif dimension == 1 or dimension == 'columns':
-            return df.shape[1]
-        else:
-            return df.shape      
-
-    def missing(self, df_column):
-        count = self.df[df_column].isna().sum()
-        percentage_count = (count/self.df_shape(self.df, 0)) * 100
-        percentage_count = round(percentage_count, 2)
-
-        return count, percentage_count
-    
+    def df_shape(self):
+        return self.df.shape    
+              
     @staticmethod
     def df_skew(df, print=0):
         skew = {df_column: df[df_column].skew() for df_column in df.columns if df.dtypes[df_column] in ['float64', 'int64']}
@@ -111,7 +90,22 @@ class DataFrameInfo:
                 print(f'{df_col}: {skews}')
         
         return skew
+    
+    def info(self):
+        return self.df.info()
 
+    def missing(self, df_column):
+        count = self.df[df_column].isna().sum()
+        percentage_count = (count/self.df_shape(self.df, 0)) * 100
+        percentage_count = round(percentage_count, 2)
+
+        return count, percentage_count
+    
+    def stats(self):
+        return self.df.describe()
+
+    def unique_vals(self, df_column):
+        return self.df[df_column].unique()
 
 
 class DataFrameTransform:
@@ -132,33 +126,6 @@ class DataFrameTransform:
     '''
     def __init__(self, df): 
         self.df = df
-    
-    def fill_null(self, values):
-        self.df = self.df.fillna(value = values)
-    
-    @staticmethod
-    def log_transform(df):
-        for df_column in df.columns:
-            df[df_column] = (df[[df_column]].map(lambda i: np.log(i) if i > 0 else 0)).copy()
-    
-        return df
-    
-    @staticmethod
-    def yeojohnson_transform(df):
-        for df_column in df.columns:
-            df[df_column] = (stats.yeojohnson(df[df_column])[0]).copy()
-        
-        return df
-    
-    def remove_outliers(self):
-        for categories in self.df.columns:
-            if self.df.dtypes[categories] in ['float64', 'int64']:
-        
-                q1 = self.df[categories].quantile(0.25)
-                q3 = self.df[categories].quantile(0.75)
-                iqr = q3 - q1
-                self.df = self.df[~((self.df[categories]<(q1-1.5*iqr)) | (self.df[categories]>(q3+1.5*iqr)))]
-                self.df = self.df.dropna().reset_index(drop=True)
 
     @staticmethod
     def boxcox_transform(df):
@@ -173,6 +140,33 @@ class DataFrameTransform:
 
         return df
     
+    def fill_null(self, values):
+        self.df = self.df.fillna(value = values)
+    
+    @staticmethod
+    def log_transform(df):
+        for df_column in df.columns:
+            df[df_column] = (df[[df_column]].map(lambda i: np.log(i) if i > 0 else 0)).copy()
+    
+        return df
+
+    def remove_outliers(self):
+        for categories in self.df.columns:
+            if self.df.dtypes[categories] in ['float64', 'int64']:
+        
+                q1 = self.df[categories].quantile(0.25)
+                q3 = self.df[categories].quantile(0.75)
+                iqr = q3 - q1
+                self.df = self.df[~((self.df[categories]<(q1-1.5*iqr)) | (self.df[categories]>(q3+1.5*iqr)))]
+                self.df = self.df.dropna().reset_index(drop=True)
+    
+    @staticmethod
+    def yeojohnson_transform(df):
+        for df_column in df.columns:
+            df[df_column] = (stats.yeojohnson(df[df_column])[0]).copy()
+        
+        return df
+     
 class Plotter:
     '''
     A class used to print graphs of the data.
@@ -202,6 +196,13 @@ class Plotter:
     def __init__(self, df):
         self.df = df
 
+    def plot_boxplot(self, df_column):
+        ax = self.df.plot.box(column = df_column)
+        plt.title(f'{df_column} Data Distribution')
+
+    def plot_hist(self):
+        self.df.hist()
+
     def plot_missing(self):
         '''
         Plot the missing values of the dataframe in a bar chart
@@ -217,13 +218,6 @@ class Plotter:
 
         plt.bar(column_headings, null_values)
         plt.show()
-
-    def plot_hist(self):
-        self.df.hist()
-
-    def plot_boxplot(self, df_column):
-        ax = self.df.plot.box(column = df_column)
-        plt.title(f'{df_column} Data Distribution')
 
     def plot_scatter(self, df_column):
         col_data = self.df[df_column]
