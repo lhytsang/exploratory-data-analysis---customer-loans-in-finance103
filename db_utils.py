@@ -150,6 +150,16 @@ class DataFrameTransform:
         
         return df
     
+    def remove_outliers(self):
+        for categories in self.df.columns:
+            if self.df.dtypes[categories] in ['float64', 'int64']:
+        
+                q1 = self.df[categories].quantile(0.25)
+                q3 = self.df[categories].quantile(0.75)
+                iqr = q3 - q1
+                self.df = self.df[~((self.df[categories]<(q1-1.5*iqr)) | (self.df[categories]>(q3+1.5*iqr)))]
+                self.df = self.df.dropna().reset_index(drop=True)
+
     @staticmethod
     def boxcox_transform(df):
         for df_column in df.columns:
