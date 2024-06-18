@@ -162,7 +162,7 @@ class DataFrameTransform:
         return df
     
     def fill_null(self, values):
-        self.df = self.df.fillna(value = values)
+        self.df.fillna(value = values, inplace = True)
     
     @staticmethod
     def log_transform(df):
