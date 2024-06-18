@@ -101,7 +101,7 @@ class DataFrameInfo:
 
     def missing(self, df_column):
         count = self.df[df_column].isna().sum()
-        percentage_count = (count/self.df_shape(self.df, 0)) * 100
+        percentage_count = (count/self.df_shape()[0]) * 100
         percentage_count = round(percentage_count, 2)
 
         return count, percentage_count
