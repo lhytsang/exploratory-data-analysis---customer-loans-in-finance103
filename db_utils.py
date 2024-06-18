@@ -8,11 +8,16 @@ class RDSDatabaseConnector:
     
     Attributes
     ----------
-    
-
+    credentials: Python dictionary
+        collection of key: value pairs containing the database credentials 
 
     Methods
     -------
+    initialise_database()
+    
+    load_csv(file)
+    
+    save_file(df, filename)
     
 
     '''
@@ -115,13 +120,26 @@ class DataFrameTransform:
     
     Attributes
     ----------
-    Dataframe: Pandas dataframe
+    dataframe: Pandas dataframe
         a table containing the data of all members and their financial details
 
 
     Methods
     -------
+    boxcox_transform(df)
+        Applies the Box-Cox Transform method to correct skew after checking the data is positive in the given dataframe
+
+    fill_null(values)
+        Fills the null values in the dataframe with the value provided
+
+    log_transform(df)
+        Applies the Log transform method to correct skew in the given dataframe
+
+    remove_outliers()
+        Removes any outliers in each column of the dataframe  
     
+    yeojohnson_transform(df)
+        Applies the Yeo-Johnson Transform to correct skew in the given dataframe
 
     '''
     def __init__(self, df): 
@@ -180,14 +198,14 @@ class Plotter:
 
     Methods
     -------
-    plot_missing()
-        Creates a bar chart of how many null values there are in each column
-    
+    plot_boxplot(df_column)
+        Creates a boxplot of the data in the column df_column of the dataframe
+        
     plot_hist()
         Creates a histogram for each column in the dataframe
 
-    plot_boxplot(df_column)
-        Creates a boxplot of the data in the column df_column of the dataframe
+    plot_missing()
+        Creates a bar chart of how many null values there are in each column
 
     plot_scatter(df_column)
         Plots a scatter graph of the data in the column df_column of the dataframe
