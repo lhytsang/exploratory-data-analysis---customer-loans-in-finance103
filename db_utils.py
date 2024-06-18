@@ -107,6 +107,9 @@ class DataFrameInfo:
         return count, percentage_count
     
     def stats(self):
+        '''
+        Extract statistical values: median, standard deviation and mean from the columns and the dataFrame
+        '''
         return self.df.describe()
 
     def unique_vals(self, df_column):
