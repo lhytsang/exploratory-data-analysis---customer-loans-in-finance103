@@ -1,5 +1,5 @@
 from scipy import stats
-import numpy as np, matplotlib.pyplot as plt, pandas as pd, sqlalchemy 
+import numpy as np, matplotlib.pyplot as plt, pandas as pd, plotly.express as px, sqlalchemy 
 
 class RDSDatabaseConnector:
     '''
@@ -239,6 +239,11 @@ class Plotter:
 
         plt.bar(column_headings, null_values)
         plt.show()
+
+    @staticmethod
+    def plot_pie(plot_values, section_names, plot_title):
+        fig = px.pie(values=plot_values, names=section_names, title=plot_title)
+        fig.show()
 
     def plot_scatter(self, df_column):
         col_data = self.df[df_column]
