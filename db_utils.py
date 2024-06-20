@@ -210,6 +210,9 @@ class Plotter:
     plot_missing()
         Creates a bar chart of how many null values there are in each column
 
+    plot_pie(plot_values, section_names, plot_title)
+        Plots a pie chart with the 'plot_values' given.
+
     plot_scatter(df_column)
         Plots a scatter graph of the data in the column df_column of the dataframe
 
