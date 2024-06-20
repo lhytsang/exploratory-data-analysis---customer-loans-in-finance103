@@ -248,10 +248,13 @@ class Plotter:
         fig = px.pie(values=plot_values, names=section_names, title=plot_title)
         fig.show()
 
-    def plot_scatter(self, df_column):
-        col_data = self.df[df_column]
+    def plot_scatter(self):
+        df_cols = self.df.columns.values.tolist()
         
-        x = np.linspace(0, max(col_data))
-        y = col_data
-        plt.scatter(x, y, title = df_column)
+        for df_col in df_cols:
+            x = self.df.index
+            y = self.df[df_col]
+            plt.scatter(x, y)
+            plt.title(df_col)
+            plt.show()
 
