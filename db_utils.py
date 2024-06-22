@@ -308,7 +308,7 @@ class Plotter:
         for df_col in df_cols:
             x = self.df.index
             y = self.df[df_col]
-            plt.scatter(x, y, alpha=0)
+            plt.scatter(x, y, alpha=0.1)
             plt.title(df_col)
             plt.show()
 
