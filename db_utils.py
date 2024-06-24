@@ -256,12 +256,9 @@ class Plotter:
     -------
     plot_boxplot(df_column)
         Creates a boxplot of the data in the column df_column of the dataframe
-        
-    plot_hist()
-        Creates a histogram for each column in the dataframe
 
     plot_missing()
-        Creates a bar chart of how many null values there are in each column
+        Creates a bar chart of how many null values there are in each column of the dataframe
 
     plot_pie(plot_values, section_names, plot_title)
         Plots a pie chart with the 'plot_values' given.
@@ -273,20 +270,17 @@ class Plotter:
     def __init__(self, df):
         self.df = df
 
+    @staticmethod
+    def plot_bar(x_vals, y_vals):
+        plt.bar(x_vals, y_vals)
+
     def plot_boxplot(self, df_column):
         ax = self.df.plot.box(column = df_column)
         plt.title(f'{df_column} Data Distribution')
 
-    def plot_hist(self):
-        self.df.hist()
-
     def plot_missing(self):
         '''
-        Plot the missing values of the dataframe in a bar chart
-
-        Parameters: 
-        
-        dataframe       the dataframe which we want to find the amount of missing values in
+        Plots the amount of missing values in each column of the dataframe in a bar chart
         '''
         
         column_headings = self.df.columns.values.tolist()
@@ -294,7 +288,7 @@ class Plotter:
         for columns in column_headings:
             null_values.append(self.df[columns].isna().sum())
 
-        plt.bar(column_headings, null_values)
+        self.plot_bar(column_headings, null_values)
         plt.show()
 
     @staticmethod
