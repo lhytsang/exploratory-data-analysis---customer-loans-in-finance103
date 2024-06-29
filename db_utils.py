@@ -240,6 +240,17 @@ class DataFrameTransform:
             df[df_column] = (stats.yeojohnson(df[df_column])[0]).copy()
         
         return df
+    
+    @staticmethod
+    def dummy_df(df, df2):
+
+        for df_column in df.columns:
+            if df[df_column].dtype.name == 'object':
+                df_dummies = pd.get_dummies(df[df_column], dtype=float)
+                df2 = pd.concat([df2, df_dummies], axis=1)
+                del df2[df_column]
+        
+        return df2
      
 class Plotter:
     '''
