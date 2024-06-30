@@ -170,8 +170,8 @@ class DataFrameInfo:
 
     @staticmethod
     def check_correlation(df):
-        df_vals = df.values
-        corr_matrix = np.corrcoef(df_vals.T)
+        corr_matrix = df.corr()
+        np.seterr(divide='ignore', invalid='ignore')
 
         return corr_matrix
 
