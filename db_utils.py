@@ -2,7 +2,7 @@ from scipy import stats
 import numpy as np, matplotlib.pyplot as plt, pandas as pd, plotly.express as px, sqlalchemy 
 
 class RDSDatabaseConnector:
-    '''
+    """
     A class used to extract the data from a specific website.
 
     
@@ -21,17 +21,16 @@ class RDSDatabaseConnector:
 
     save_file(df, filename)
         Saves the dataframe given as a file called 'filename'
-
-    '''
+    """
 
     def __init__(self, credentials):
         self.credentials = credentials
 
     def initialise_database(self):
-        '''
+        """
         Establishing the dataset from the credentials given when calling the class and returning the data as a Pandas dataframe
-        '''
-
+        """
+        
         engine = sqlalchemy.create_engine(f"postgresql://{self.credentials['RDS_USER']}:{self.credentials['RDS_PASSWORD']}@{self.credentials['RDS_HOST']}:{self.credentials['RDS_PORT']}/{self.credentials['RDS_DATABASE']}")
         sql = "SELECT * FROM loan_payments"
         df = pd.read_sql(sql, con = engine)
@@ -39,30 +38,32 @@ class RDSDatabaseConnector:
         return df
     
     def load_csv(self, file):
-        '''
+        """
         Accessing the data given in the file provided. 
         
 
         Parameters: 
-        
+        -----------
         file (str)     the filename of the document we wish to retrieve the data from
-        '''
+        """
+        
         return pd.read_csv(file, index_col=[0])
 
     def save_file(self, df, filename):
-        '''
+        """
         Making a copy of the 'df' on the local machine as a CSV file and labelling the document as 'filename'#
 
         
         Parameters: 
-        
+        -----------
         df              the dataframe which we want to make a copy of
         filename (str)  the name that we want to save the file as
-        '''
+        """
+        
         df.to_csv(filename)
 
 class DataTransform:
-    '''
+    """
     A class used to alter the data of a dataframe.
 
     
@@ -79,35 +80,36 @@ class DataTransform:
 
     date_data(df_column)
         Changes the values of the dataframe column to type 'datetime'
-
-    '''
+    """
+    
     def __init__(self, df):
         self.df = df
     
     def change_type(self, df_column, data_type):
-        '''
+        """
         Changes the dtype of the df_column to the given 'data_type'
 
         Parameters: 
-        
+        -----------
         df_column (str)     the dataframe column that we want to change the dtype of
         data_type (str)     the dtype we want to change the dataframe column data into
-        '''
+        """
+        
         self.df[df_column] = self.df[df_column].astype(data_type)
     
     def date_data(self, df_column):
-        '''
+        """
         Changes the data of the dataframe column given into dtype 'datetime'
 
         Parameters: 
-        
+        -----------
         df_column (str)     the name of the dataframe column we wish to convert to dtype 'datetime'
-        '''
+        """
 
         self.df[df_column] = pd.to_datetime(self.df[df_column], format = 'mixed')
     
 class DataFrameInfo:
-    '''
+    """
     A class used to find out information about a dataframe.
 
     
@@ -130,8 +132,9 @@ class DataFrameInfo:
     stats()
 
     unique_vals(df_column)
+        
+    """
 
-    '''
     def __init__(self, df):
         self.df = df
 
@@ -160,9 +163,10 @@ class DataFrameInfo:
         return count, percentage_count
     
     def stats(self):
-        '''
+        """
         Extract statistical values: median, standard deviation and mean from the columns and the dataFrame
-        '''
+        """
+        
         return self.df.describe()
 
     def unique_vals(self, df_column):
@@ -176,7 +180,7 @@ class DataFrameInfo:
         return corr_matrix
 
 class DataFrameTransform:
-    '''
+    """     
     A class used to change and alter the data within a dataframe.
 
     
@@ -202,8 +206,8 @@ class DataFrameTransform:
     
     yeojohnson_transform(df)
         Applies the Yeo-Johnson Transform to correct skew in the given dataframe
+    """
 
-    '''
     def __init__(self, df): 
         self.df = df
 
@@ -259,7 +263,7 @@ class DataFrameTransform:
         return df2
      
 class Plotter:
-    '''
+    """
     A class used to print graphs of the data.
 
     
@@ -281,9 +285,9 @@ class Plotter:
         Plots a pie chart with the 'plot_values' given.
 
     plot_scatter(df_column)
-        Plots a scatter graph of the data in the column df_column of the dataframe
+        Plots a scatter graph of the data in the column df_column of the dataframe 
+    """
 
-    '''
     def __init__(self, df):
         self.df = df
 
@@ -296,9 +300,9 @@ class Plotter:
         plt.title(f'{df_column} Data Distribution')
 
     def plot_missing(self):
-        '''
+        """
         Plots the amount of missing values in each column of the dataframe in a bar chart
-        '''
+        """
         
         column_headings = self.df.columns.values.tolist()
         null_values = []
