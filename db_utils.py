@@ -11,6 +11,7 @@ class RDSDatabaseConnector:
     credentials: Python dictionary
         collection of key: value pairs containing the database credentials 
 
+        
     Methods
     -------
     initialise_database()
@@ -41,13 +42,12 @@ class RDSDatabaseConnector:
     def load_csv(file):
         """
         Accessing the data given in the file provided. 
-        
 
-        Parameters: 
-        -----------
+        
+        Parameters:
+        ------------
         file (str)     the filename of the document we wish to retrieve the data from
         """
-        
         return pd.read_csv(file, index_col=[0])
 
     @staticmethod
@@ -56,8 +56,8 @@ class RDSDatabaseConnector:
         Making a copy of the dataframe on the local machine as a CSV file and labelling the document as 'filename'
 
         
-        Parameters: 
-        -----------
+        Parameters:
+        ------------
         df (dataframe)  the dataframe which we want to make a copy of
         filename (str)  the name that we want to save the file as
         """
@@ -91,23 +91,23 @@ class DataTransform:
         """
         Changes the dtype of the dataframe column to the given data type
 
-        Parameters: 
-        -----------
+        
+        Parameters:
+        ------------
         df_column (str)     the dataframe column that we want to change the dtype of
         data_type (str)     the dtype we want to change the dataframe column data into
         """
-        
         self.df[df_column] = self.df[df_column].astype(data_type)
     
     def date_data(self, df_column):
         """
         Changes the data of the dataframe column given into dtype 'datetime'
 
-        Parameters: 
-        -----------
+        
+        Parameters:
+        ------------
         df_column (str)     the name of the dataframe column we wish to convert to dtype 'datetime'
         """
-
         self.df[df_column] = pd.to_datetime(self.df[df_column], format = 'mixed')
     
 class DataFrameInfo:
@@ -152,6 +152,11 @@ class DataFrameInfo:
     def check_correlation(df):
         """
         Calculates the correlation between columns in the dataframe and returns it as a correlation matrix
+
+
+        Parameters:
+        ------------
+        df (dataframe)      Pandas dataframe
         """
         corr_matrix = df.corr()
         np.seterr(divide='ignore', invalid='ignore')
@@ -162,13 +167,18 @@ class DataFrameInfo:
         """
         Gives the number of rows and columns in a dataframe in the form of a tuple
         """
-
         return self.df.shape    
               
     @staticmethod
     def df_skew(df, print=0):
         """
         Calculates how skewed the data is in each column of the dataframe and prints the results if specified
+        
+
+        Parameters:
+        ------------
+        df (dataframe)      Pandas dataframe
+        print (int)         Can be either 0 (only returns the skew values) or 1 (also print out the values for each dataframe column). Default is 0
         """
         skew = {df_column: df[df_column].skew() for df_column in df.columns if df.dtypes[df_column] in ['float64', 'int64']}
         
@@ -187,6 +197,10 @@ class DataFrameInfo:
     def missing(self, df_column):
         """
         Works out the amount of missing values in the dataframe column and also returns it as a percentage 
+
+        Parameters:
+        ------------
+        df_column (str)     dataframe column
         """
         count = self.df[df_column].isna().sum()
         percentage_count = (count/self.df_shape()[0]) * 100
@@ -205,9 +219,9 @@ class DataFrameInfo:
         """
         Finds the distinctive values in a dataframe column
 
-        Parameters
-        -----------
-        df_column (str): dataframe column
+        Parameters:
+        ------------
+        df_column (str)     dataframe column
         """
         return self.df[df_column].unique()
 
@@ -250,6 +264,10 @@ class DataFrameTransform:
     def boxcox_transform(df):
         """
         Uses the Box Cox Transform method to find the skew of each dataframe column
+
+        Parameters:
+        ------------
+        df (dataframe)      Pandas dataframe
         """
         for df_column in df.columns:
             for element in df[df_column].values:
@@ -266,6 +284,11 @@ class DataFrameTransform:
     def dummy_df(df, df2):
         """
         Produces dummy columns for any categorical dataframe columns in the dataframe and adds them to a second dataframe
+
+        Parameters:
+        ------------
+        df (dataframe)      Pandas dataframe whose columns we want to make dummies of
+        df2 (dataframe)     Pandas dataframe which contain the updated columns
         """
         for df_column in df.columns:
             if df[df_column].dtype.name == 'object':
@@ -278,6 +301,10 @@ class DataFrameTransform:
     def fill_null(self, values):
         """
         Replaces the null elements in a dataframe with a specific value
+
+        Parameters:
+        ------------
+        values (dict)       A dictionary of the columns we want to be filled and the values that we want to replace the null values with
         """
         self.df.fillna(value = values, inplace = True)
     
@@ -285,6 +312,10 @@ class DataFrameTransform:
     def log_transform(df):
         """
         Uses the Log Transform method to find the skew of each dataframe column
+
+        Parameters:
+        ------------
+        df (dataframe)      Pandas dataframe 
         """
         for df_column in df.columns:
             df[df_column] = (df[[df_column]].map(lambda i: np.log(i) if i > 0 else 0)).copy()
@@ -308,6 +339,10 @@ class DataFrameTransform:
     def yeojohnson_transform(df):
         """
         Uses the Yeo Johnson Transform method to find the skew of each dataframe column
+
+        Parameters:
+        ------------
+        df (dataframe)      Pandas dataframe
         """
         for df_column in df.columns:
             df[df_column] = (stats.yeojohnson(df[df_column])[0]).copy()
@@ -348,10 +383,10 @@ class Plotter:
         """
         Plots a bar chart with the given values
 
-        Parameters
-        -----------
-        x_vals (list): A list of the independent variables to be plotted
-        y_vals (list): A list of the dependent variables to be plotted
+        Parameters:
+        ------------
+        x_vals (list)       A list of the independent variables to be plotted
+        y_vals (list)       A list of the dependent variables to be plotted
         """
         plt.bar(x_vals, y_vals)
 
@@ -360,8 +395,8 @@ class Plotter:
         Plots the box plot for the specified dataframe column
 
         Parameters:
-        -----------
-        df_column (str): The dataframe column that we want to plot a box plot of
+        ------------
+        df_column (str)     The dataframe column that we want to plot a box plot of
         """
         ax = self.df.plot.box(column = df_column)
         plt.title(f'{df_column} Data Distribution')
@@ -384,8 +419,8 @@ class Plotter:
         """
         Plots a pie chart using the values provided
 
-        Parameters
-        -----------
+        Parameters:
+        ------------
         plot_values (list): the variables that we wish to plot
         section_names (list): a list containing the labels for each pie slice
         plot_title (str): the title of the pie chart 
