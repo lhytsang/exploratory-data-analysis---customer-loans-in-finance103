@@ -37,7 +37,8 @@ class RDSDatabaseConnector:
 
         return df
     
-    def load_csv(self, file):
+    @staticmethod
+    def load_csv(file):
         """
         Accessing the data given in the file provided. 
         
@@ -49,14 +50,15 @@ class RDSDatabaseConnector:
         
         return pd.read_csv(file, index_col=[0])
 
-    def save_file(self, df, filename):
+    @staticmethod
+    def save_file(df, filename):
         """
-        Making a copy of the 'df' on the local machine as a CSV file and labelling the document as 'filename'#
+        Making a copy of the dataframe on the local machine as a CSV file and labelling the document as 'filename'
 
         
         Parameters: 
         -----------
-        df              the dataframe which we want to make a copy of
+        df (dataframe)  the dataframe which we want to make a copy of
         filename (str)  the name that we want to save the file as
         """
         
@@ -87,7 +89,7 @@ class DataTransform:
     
     def change_type(self, df_column, data_type):
         """
-        Changes the dtype of the df_column to the given 'data_type'
+        Changes the dtype of the dataframe column to the given data type
 
         Parameters: 
         -----------
@@ -121,29 +123,53 @@ class DataFrameInfo:
 
     Methods
     -------
+    check_correlation(df)
+        Produces a correlation matrix for the dataframe
+
     df_shape()
+        Gives the dimensions of the dataframe in a tuple
 
     df_skew(df, print)
+        Calculates how skewed the data in each dataframe column is
 
     info()
+        Provides a summary of the dataframe
     
     missing(df_column)
+        Caluculates the amount of missing values in the dataframe column
 
     stats()
-
+        Prints out descriptive statistics about the dataframe
+    
     unique_vals(df_column)
-        
+        Returns the unique values in the dataframe column
     """
 
     def __init__(self, df):
         self.df = df
 
+    @staticmethod
+    def check_correlation(df):
+        """
+        Calculates the correlation between columns in the dataframe and returns it as a correlation matrix
+        """
+        corr_matrix = df.corr()
+        np.seterr(divide='ignore', invalid='ignore')
+
+        return corr_matrix
 
     def df_shape(self):
+        """
+        Gives the number of rows and columns in a dataframe in the form of a tuple
+        """
+
         return self.df.shape    
               
     @staticmethod
     def df_skew(df, print=0):
+        """
+        Calculates how skewed the data is in each column of the dataframe and prints the results if specified
+        """
         skew = {df_column: df[df_column].skew() for df_column in df.columns if df.dtypes[df_column] in ['float64', 'int64']}
         
         if print == 1:
@@ -153,9 +179,15 @@ class DataFrameInfo:
         return skew
     
     def info(self):
+        """
+        Prints out information of a dataframe including index dtypes and columns, non-null values and memory usage
+        """
         return self.df.info()
 
     def missing(self, df_column):
+        """
+        Works out the amount of missing values in the dataframe column and also returns it as a percentage 
+        """
         count = self.df[df_column].isna().sum()
         percentage_count = (count/self.df_shape()[0]) * 100
         percentage_count = round(percentage_count, 2)
@@ -164,20 +196,20 @@ class DataFrameInfo:
     
     def stats(self):
         """
-        Extract statistical values: median, standard deviation and mean from the columns and the dataFrame
+        Extracts statistical values like measures of central tendency and dispersion
         """
         
         return self.df.describe()
 
     def unique_vals(self, df_column):
+        """
+        Finds the distinctive values in a dataframe column
+
+        Parameters
+        -----------
+        df_column (str): dataframe column
+        """
         return self.df[df_column].unique()
-
-    @staticmethod
-    def check_correlation(df):
-        corr_matrix = df.corr()
-        np.seterr(divide='ignore', invalid='ignore')
-
-        return corr_matrix
 
 class DataFrameTransform:
     """     
@@ -194,6 +226,9 @@ class DataFrameTransform:
     -------
     boxcox_transform(df)
         Applies the Box-Cox Transform method to correct skew after checking the data is positive in the given dataframe
+
+    dummy_df(df, df2)
+        Creates dummy columns for categorical columns in the dataframe and merges these columns to the second dataframe
 
     fill_null(values)
         Fills the null values in the dataframe with the value provided
@@ -213,6 +248,9 @@ class DataFrameTransform:
 
     @staticmethod
     def boxcox_transform(df):
+        """
+        Uses the Box Cox Transform method to find the skew of each dataframe column
+        """
         for df_column in df.columns:
             for element in df[df_column].values:
                 if element % 10 == 0:
@@ -224,17 +262,39 @@ class DataFrameTransform:
 
         return df
     
+    @staticmethod
+    def dummy_df(df, df2):
+        """
+        Produces dummy columns for any categorical dataframe columns in the dataframe and adds them to a second dataframe
+        """
+        for df_column in df.columns:
+            if df[df_column].dtype.name == 'object':
+                df_dummies = pd.get_dummies(df[df_column], dtype=float)
+                df2 = pd.concat([df2, df_dummies], axis=1)
+                del df2[df_column]
+        
+        return df2    
+    
     def fill_null(self, values):
+        """
+        Replaces the null elements in a dataframe with a specific value
+        """
         self.df.fillna(value = values, inplace = True)
     
     @staticmethod
     def log_transform(df):
+        """
+        Uses the Log Transform method to find the skew of each dataframe column
+        """
         for df_column in df.columns:
             df[df_column] = (df[[df_column]].map(lambda i: np.log(i) if i > 0 else 0)).copy()
     
         return df
 
     def remove_outliers(self):
+        """
+        Finds and removes any outliers that exist in the dataframe
+        """
         for categories in self.df.columns:
             if self.df.dtypes[categories] in ['float64', 'int64']:
         
@@ -246,21 +306,13 @@ class DataFrameTransform:
     
     @staticmethod
     def yeojohnson_transform(df):
+        """
+        Uses the Yeo Johnson Transform method to find the skew of each dataframe column
+        """
         for df_column in df.columns:
             df[df_column] = (stats.yeojohnson(df[df_column])[0]).copy()
         
         return df
-    
-    @staticmethod
-    def dummy_df(df, df2):
-
-        for df_column in df.columns:
-            if df[df_column].dtype.name == 'object':
-                df_dummies = pd.get_dummies(df[df_column], dtype=float)
-                df2 = pd.concat([df2, df_dummies], axis=1)
-                del df2[df_column]
-        
-        return df2
      
 class Plotter:
     """
@@ -293,9 +345,24 @@ class Plotter:
 
     @staticmethod
     def plot_bar(x_vals, y_vals):
+        """
+        Plots a bar chart with the given values
+
+        Parameters
+        -----------
+        x_vals (list): A list of the independent variables to be plotted
+        y_vals (list): A list of the dependent variables to be plotted
+        """
         plt.bar(x_vals, y_vals)
 
     def plot_boxplot(self, df_column):
+        """
+        Plots the box plot for the specified dataframe column
+
+        Parameters:
+        -----------
+        df_column (str): The dataframe column that we want to plot a box plot of
+        """
         ax = self.df.plot.box(column = df_column)
         plt.title(f'{df_column} Data Distribution')
 
@@ -314,10 +381,22 @@ class Plotter:
 
     @staticmethod
     def plot_pie(plot_values, section_names, plot_title):
+        """
+        Plots a pie chart using the values provided
+
+        Parameters
+        -----------
+        plot_values (list): the variables that we wish to plot
+        section_names (list): a list containing the labels for each pie slice
+        plot_title (str): the title of the pie chart 
+        """
         fig = px.pie(values=plot_values, names=section_names, title=plot_title)
         fig.show()
 
     def plot_scatter(self):
+        """
+        Plots a scatter graph for all the columns of the dataframe 
+        """
         df_cols = self.df.columns.values.tolist()
         
         for df_col in df_cols:
