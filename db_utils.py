@@ -175,7 +175,7 @@ class DataFrameInfo:
         return self.df.shape    
               
     @staticmethod
-    def df_skew(df, print=0):
+    def df_skew(df, print=False):
         """
         Calculates how skewed the data is in each column of the dataframe and prints the results if specified
         
@@ -183,13 +183,13 @@ class DataFrameInfo:
         Parameters:
         ------------
         df (dataframe)      Pandas dataframe
-        print (int)         Can be either 0 (only returns the skew values) or 1 (also print out the values for each dataframe column). Default is 0
+        print (bool)        Prints out the skew values for each dataframe column if True. Default is False
         """
         
         skew = {df_column: df[df_column].skew() for df_column in df.columns if df.dtypes[df_column] in ['float64', 'int64']}
         
-        if print == 1:
-            for df_col, skews in skew(df).items:
+        if print == True:
+            for df_col, skews in skew(df).items():
                 print(f'{df_col}: {skews}')
         
         return skew
