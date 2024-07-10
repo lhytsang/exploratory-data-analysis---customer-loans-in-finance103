@@ -31,7 +31,6 @@ class RDSDatabaseConnector:
         """
         Establishing the dataset from the credentials given when calling the class and returning the data as a Pandas dataframe
         """
-        
         engine = sqlalchemy.create_engine(f"postgresql://{self.credentials['RDS_USER']}:{self.credentials['RDS_PASSWORD']}@{self.credentials['RDS_HOST']}:{self.credentials['RDS_PORT']}/{self.credentials['RDS_DATABASE']}")
         sql = "SELECT * FROM loan_payments"
         df = pd.read_sql(sql, con = engine)
@@ -61,7 +60,6 @@ class RDSDatabaseConnector:
         df (dataframe)  the dataframe which we want to make a copy of
         filename (str)  the name that we want to save the file as
         """
-        
         df.to_csv(filename)
 
 class DataTransform:
@@ -212,7 +210,6 @@ class DataFrameInfo:
         """
         Extracts statistical values like measures of central tendency and dispersion
         """
-        
         return self.df.describe()
 
     def unique_vals(self, df_column):
