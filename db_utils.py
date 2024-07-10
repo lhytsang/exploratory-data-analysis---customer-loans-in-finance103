@@ -31,6 +31,7 @@ class RDSDatabaseConnector:
         """
         Establishing the dataset from the credentials given when calling the class and returning the data as a Pandas dataframe
         """
+        
         engine = sqlalchemy.create_engine(f"postgresql://{self.credentials['RDS_USER']}:{self.credentials['RDS_PASSWORD']}@{self.credentials['RDS_HOST']}:{self.credentials['RDS_PORT']}/{self.credentials['RDS_DATABASE']}")
         sql = "SELECT * FROM loan_payments"
         df = pd.read_sql(sql, con = engine)
@@ -47,6 +48,7 @@ class RDSDatabaseConnector:
         ------------
         file (str)     the filename of the document we wish to retrieve the data from
         """
+        
         return pd.read_csv(file, index_col=[0])
 
     @staticmethod
@@ -60,6 +62,7 @@ class RDSDatabaseConnector:
         df (dataframe)  the dataframe which we want to make a copy of
         filename (str)  the name that we want to save the file as
         """
+        
         df.to_csv(filename)
 
 class DataTransform:
@@ -95,6 +98,7 @@ class DataTransform:
         df_column (str)     the dataframe column that we want to change the dtype of
         data_type (str)     the dtype we want to change the dataframe column data into
         """
+        
         self.df[df_column] = self.df[df_column].astype(data_type)
     
     def date_data(self, df_column):
@@ -106,6 +110,7 @@ class DataTransform:
         ------------
         df_column (str)     the name of the dataframe column we wish to convert to dtype 'datetime'
         """
+        
         self.df[df_column] = pd.to_datetime(self.df[df_column], format = 'mixed')
     
 class DataFrameInfo:
@@ -156,6 +161,7 @@ class DataFrameInfo:
         ------------
         df (dataframe)      Pandas dataframe
         """
+        
         corr_matrix = df.corr()
         np.seterr(divide='ignore', invalid='ignore')
 
@@ -165,6 +171,7 @@ class DataFrameInfo:
         """
         Gives the number of rows and columns in a dataframe in the form of a tuple
         """
+        
         return self.df.shape    
               
     @staticmethod
@@ -178,6 +185,7 @@ class DataFrameInfo:
         df (dataframe)      Pandas dataframe
         print (int)         Can be either 0 (only returns the skew values) or 1 (also print out the values for each dataframe column). Default is 0
         """
+        
         skew = {df_column: df[df_column].skew() for df_column in df.columns if df.dtypes[df_column] in ['float64', 'int64']}
         
         if print == 1:
@@ -190,6 +198,7 @@ class DataFrameInfo:
         """
         Prints out information of a dataframe including index dtypes and columns, non-null values and memory usage
         """
+        
         return self.df.info()
 
     def missing(self, df_column):
@@ -200,6 +209,7 @@ class DataFrameInfo:
         ------------
         df_column (str)     dataframe column
         """
+        
         count = self.df[df_column].isna().sum()
         percentage_count = (count/self.df_shape()[0]) * 100
         percentage_count = round(percentage_count, 2)
@@ -210,6 +220,7 @@ class DataFrameInfo:
         """
         Extracts statistical values like measures of central tendency and dispersion
         """
+        
         return self.df.describe()
 
     def unique_vals(self, df_column):
@@ -220,6 +231,7 @@ class DataFrameInfo:
         ------------
         df_column (str)     dataframe column
         """
+        
         return self.df[df_column].unique()
 
 class DataFrameTransform:
@@ -266,6 +278,7 @@ class DataFrameTransform:
         ------------
         df (dataframe)      Pandas dataframe
         """
+        
         for df_column in df.columns:
             for element in df[df_column].values:
                 if element % 10 == 0:
@@ -287,6 +300,7 @@ class DataFrameTransform:
         df (dataframe)      Pandas dataframe whose columns we want to make dummies of
         df2 (dataframe)     Pandas dataframe which contain the updated columns
         """
+        
         for df_column in df.columns:
             if df[df_column].dtype.name == 'object':
                 df_dummies = pd.get_dummies(df[df_column], dtype=float)
@@ -303,6 +317,7 @@ class DataFrameTransform:
         ------------
         values (dict)       A dictionary of the columns we want to be filled and the values that we want to replace the null values with
         """
+        
         self.df.fillna(value = values, inplace = True)
     
     @staticmethod
@@ -314,6 +329,7 @@ class DataFrameTransform:
         ------------
         df (dataframe)      Pandas dataframe 
         """
+        
         for df_column in df.columns:
             df[df_column] = (df[[df_column]].map(lambda i: np.log(i) if i > 0 else 0)).copy()
     
@@ -323,6 +339,7 @@ class DataFrameTransform:
         """
         Finds and removes any outliers that exist in the dataframe
         """
+        
         for categories in self.df.columns:
             if self.df.dtypes[categories] in ['float64', 'int64']:
         
@@ -341,6 +358,7 @@ class DataFrameTransform:
         ------------
         df (dataframe)      Pandas dataframe
         """
+        
         for df_column in df.columns:
             df[df_column] = (stats.yeojohnson(df[df_column])[0]).copy()
         
@@ -385,6 +403,7 @@ class Plotter:
         x_vals (list)       A list of the independent variables to be plotted
         y_vals (list)       A list of the dependent variables to be plotted
         """
+        
         plt.bar(x_vals, y_vals)
 
     def plot_boxplot(self, df_column):
@@ -395,6 +414,7 @@ class Plotter:
         ------------
         df_column (str)     The dataframe column that we want to plot a box plot of
         """
+       
         ax = self.df.plot.box(column = df_column)
         plt.title(f'{df_column} Data Distribution')
 
@@ -422,6 +442,7 @@ class Plotter:
         section_names (list): a list containing the labels for each pie slice
         plot_title (str): the title of the pie chart 
         """
+        
         fig = px.pie(values=plot_values, names=section_names, title=plot_title)
         fig.show()
 
@@ -429,6 +450,7 @@ class Plotter:
         """
         Plots a scatter graph for all the columns of the dataframe 
         """
+        
         df_cols = self.df.columns.values.tolist()
         
         for df_col in df_cols:
