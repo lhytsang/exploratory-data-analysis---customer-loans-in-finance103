@@ -189,7 +189,7 @@ class DataFrameInfo:
         skew = {df_column: df[df_column].skew() for df_column in df.columns if df.dtypes[df_column] in ['float64', 'int64']}
         
         if print == 1:
-            for df_col, skews in skew(df).items():
+            for df_col, skews in skew(df).items:
                 print(f'{df_col}: {skews}')
         
         return skew
