@@ -188,11 +188,11 @@ class DataFrameInfo:
         
         skew = {df_column: df[df_column].skew() for df_column in df.columns if df.dtypes[df_column] in ['float64', 'int64']}
         
-        if print == True:
-            for df_col, skews in skew(df).items():
+        if print:
+            for df_col, skews in skew.items():
                 print(f'{df_col}: {skews}')
-        
-        return skew
+        else:
+            return skew
     
     def info(self):
         """
@@ -348,7 +348,7 @@ class DataFrameTransform:
                 iqr = q3 - q1
                 self.df = self.df[~((self.df[categories]<(q1-1.5*iqr)) | (self.df[categories]>(q3+1.5*iqr)))]
                 self.df = self.df.dropna().reset_index(drop=True)
-    
+
     @staticmethod
     def yeojohnson_transform(df):
         """
@@ -406,17 +406,16 @@ class Plotter:
         
         plt.bar(x_vals, y_vals)
 
-    def plot_boxplot(self, df_column):
+    def plot_boxplot(self):
         """
-        Plots the box plot for the specified dataframe column
+        Plots the box plot for all dataframe columns whose data only consists of integers and floats
+        """
 
-        Parameters:
-        ------------
-        df_column (str)     The dataframe column that we want to plot a box plot of
-        """
-       
-        ax = self.df.plot.box(column = df_column)
-        plt.title(f'{df_column} Data Distribution')
+        numerical_data = [df_col for df_col in self.df.columns if self.df[df_col].dtype in ['int64', 'float64']]
+        ax = self.df[numerical_data].plot(kind='box',figsize=(10, 5))
+        plt.setp(ax.get_xticklabels(), rotation=30, horizontalalignment='right', fontsize='x-small')
+        #ax = self.df.plot.box(column = df_col)
+        #plt.title(f'{df_col} Data Distribution')
 
     def plot_missing(self):
         """
