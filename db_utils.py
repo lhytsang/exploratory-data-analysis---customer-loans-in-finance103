@@ -340,14 +340,14 @@ class DataFrameTransform:
         Finds and removes any outliers that exist in the dataframe
         """
         
-        for categories in self.df.columns:
-            if self.df.dtypes[categories] in ['float64', 'int64']:
+        numerical_cols = [num_categories for num_categories in self.df.columns if self.df.dtypes[num_categories] in ['float64', 'int64']]
         
-                q1 = self.df[categories].quantile(0.25)
-                q3 = self.df[categories].quantile(0.75)
-                iqr = q3 - q1
-                self.df = self.df[~((self.df[categories]<(q1-1.5*iqr)) | (self.df[categories]>(q3+1.5*iqr)))]
-                self.df = self.df.dropna().reset_index(drop=True)
+        for num_cat in numerical_cols:
+            q1 = self.df[num_cat].quantile(0.25)
+            q3 = self.df[num_cat].quantile(0.75)
+            iqr = q3 - q1
+            self.df = self.df[~((self.df[num_cat]<(q1-1.5*iqr)) | (self.df[num_cat]>(q3+1.5*iqr)))]
+            self.df = self.df.dropna().reset_index(drop=True)
 
     @staticmethod
     def yeojohnson_transform(df):
@@ -414,8 +414,6 @@ class Plotter:
         numerical_data = [df_col for df_col in self.df.columns if self.df[df_col].dtype in ['int64', 'float64']]
         ax = self.df[numerical_data].plot(kind='box',figsize=(10, 5))
         plt.setp(ax.get_xticklabels(), rotation=30, horizontalalignment='right', fontsize='x-small')
-        #ax = self.df.plot.box(column = df_col)
-        #plt.title(f'{df_col} Data Distribution')
 
     def plot_missing(self):
         """
