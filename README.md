@@ -18,6 +18,7 @@ Commands that can be adjusted for the user are commented out using the hashtag '
 
 #df_plot.plot_scatter()
 ```
+## Contributing 
 
 ## License Information
 Distributed under the MIT License. See LICENSE for more information.
