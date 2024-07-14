@@ -1,6 +1,12 @@
 # exploratory-data-analysis---customer-loans-in-finance103
 
 exploratory-data-analysis---customer-loans-in-finance103 is a tool that allows financial institutions to analyse the loan data to make more informed decisions about loan approvals, pricing, and risk management as well as gain a deeper understanding of the risk and return associated with these loans.
+## Table of contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License Information](#license-information)
 
 ## Installation
 - Clone the repository 
