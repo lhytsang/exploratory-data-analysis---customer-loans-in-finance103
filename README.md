@@ -5,6 +5,7 @@ exploratory-data-analysis---customer-loans-in-finance103 is a tool that allows f
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [File Structure] (#file-structure)
 - [Contributing](#contributing)
 - [License Information](#license-information)
 
@@ -23,6 +24,18 @@ Commands that can be adjusted for the user are commented out using the hashtag '
 
 #df_plot.plot_scatter()
 ```
+
+## File Structure
+```
+├── credentials.yaml
+├── db_utils.ipynb
+├── db_utils.py
+├── LICENSE
+├── new_file.csv
+├── README.md
+└── requirements.txt
+```
+
 ## Contributing 
 
 To contribute to exploratory-data-analysis---customer-loans-in-finance103, follow these steps:
