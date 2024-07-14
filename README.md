@@ -20,6 +20,17 @@ Commands that can be adjusted for the user are commented out using the hashtag '
 ```
 ## Contributing 
 
+To contribute to exploratory-data-analysis---customer-loans-in-finance103, follow these steps:
+
+1. Fork this repository.
+2. Create a feature branch: `git checkout -b feature/NewFeature`.
+3. Make your changes and commit them: `git commit -m 'Add feature'`
+4. Push to the original branch: `git push origin feature/NewFeature`
+5. Create the pull request.
+
+Alternatively see the GitHub documentation on [creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
+
+
 ## License Information
 Distributed under the MIT License. See LICENSE for more information.
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
