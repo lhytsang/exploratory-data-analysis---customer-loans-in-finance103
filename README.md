@@ -2,11 +2,15 @@
 
 exploratory-data-analysis---customer-loans-in-finance103 is a tool that allows financial institutions to analyse the loan data to make more informed decisions about loan approvals, pricing, and risk management as well as gain a deeper understanding of the risk and return associated with these loans.
 
-## Installation
+## Getting Started
+
+### Prerequisites
 To be able to run the code, ensure that Anaconda is installed or that both Python and pip are. Then, type the following into the command line so that the necessary packages are installed:
 ```bash
 pip install ipykernel pandas sqlalchemy pyyaml psycopg2-binary scipy numpy plotly matplotlib seaborn
 ```
+### Installation
+
 ## Usage
 Commands that can be adjusted for the user are commented out using the hashtag '#' symbol as shown in the code below with the line prior giving an explanation as to what the code does. Simply remove the '#' symbol from the line following the explanation before pressing 'Run All' to visualise the data as well as demonstrate its results.
 ```python
