@@ -1,25 +1,20 @@
 # exploratory-data-analysis---customer-loans-in-finance103
 
-why used technologies used, issues faced, hope to implement...
+exploratory-data-analysis---customer-loans-in-finance103 is a tool that allows financial institutions to analyse the loan data to make more informed decisions about loan approvals, pricing, and risk management as well as gain a deeper understanding of the risk and return associated with these loans.
 
 ## Installation
-To be able to run the code, ensure that Anaconda is installed correctly on your device (alternatively, downloading Python and ensuring pip works is also possible). To make sure that the necessary packages are also installed, type the following into the command line:
+To be able to run the code, ensure that Anaconda is installed or that both Python and pip is. Then, type the following into the command line so that the necessary packages are installed:
 ```
 pip install ipykernel pandas sqlalchemy pyyaml psycopg2-binary scipy numpy plotly matplotlib seaborn
 ```
 ## Usage
-
+Commands that can be adjusted for the user are commented out using the hashtag '#' symbol as shown in the code below with the line prior giving an explanation as to what the code does. Simply remove the '#' symbol from the line following the explanation before pressing 'Run All' to visualise the data as well as demonstrate its results.
 ```python
 ### Plots a scatter graph of each dataframe column
 
 #df_plot.plot_scatter()
-
-
-### Prints out a heatmap showing the correlation between the dataframe 
-
-#px.imshow(new_database.corr(numeric_only = True), title = 'Heatmap using Pearson correlation coefficient')
 ```
 
 ## License Information
-
+Distributed under the MIT License. See LICENSE for more information.
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
