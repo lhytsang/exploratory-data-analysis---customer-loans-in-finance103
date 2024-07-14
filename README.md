@@ -5,7 +5,7 @@ exploratory-data-analysis---customer-loans-in-finance103 is a tool that allows f
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [File Structure] (#file-structure)
+- [File Structure](#file-structure)
 - [Contributing](#contributing)
 - [License Information](#license-information)
 
