@@ -5,7 +5,8 @@ exploratory-data-analysis---customer-loans-in-finance103 is a tool that allows f
 ## Getting Started
 
 ### Prerequisites
-To be able to run the code, ensure that Anaconda is installed or that both Python and pip are. Then, type the following into the command line so that the necessary packages are installed:
+The `requirements.txt` file contains all the Python libraries that the project depends on and they can be installed using the command:
+
 ```bash
 pip install -r requirements.txt
 ```
