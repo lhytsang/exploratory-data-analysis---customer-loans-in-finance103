@@ -2,16 +2,14 @@
 
 exploratory-data-analysis---customer-loans-in-finance103 is a tool that allows financial institutions to analyse the loan data to make more informed decisions about loan approvals, pricing, and risk management as well as gain a deeper understanding of the risk and return associated with these loans.
 
-## Getting Started
-
-### Prerequisites
-The `requirements.txt` file contains all the Python libraries that the project depends on and they can be installed using the command:
+## Installation
+- Clone the repository 
+```https://github.com/lhytsang/exploratory-data-analysis---customer-loans-in-finance103.git```
+- Go to the root directory and install its dependencies using the command 
 
 ```bash
 pip install -r requirements.txt
 ```
-### Installation
-
 ## Usage
 Commands that can be adjusted for the user are commented out using the hashtag '#' symbol as shown in the code below with the line prior giving an explanation as to what the code does. Simply remove the '#' symbol from the line following the explanation before pressing 'Run All' to visualise the data as well as demonstrate its results.
 ```python
