@@ -18,13 +18,21 @@ exploratory-data-analysis---customer-loans-in-finance103 is a tool that allows f
 pip install -r requirements.txt
 ```
 ## Usage
-Commands that can be adjusted for the user are commented out using the hashtag '#' symbol as shown in the code below with the line prior giving an explanation as to what the code does. Simply remove the '#' symbol from the line following the explanation before pressing 'Run All' to visualise the data as well as demonstrate its results.
+
 ```python
-### Plots a scatter graph of each dataframe column
+recovered_payments = unrecovered_payments = 0
 
-#df_plot.plot_scatter()
+for element in new_database['out_prncp']:
+    if element > 0:
+        unrecovered_payments += 1
+    else:
+        recovered_payments += 1
+
+### Plotting a pie chart of the amount of recovered and unrecovered loans
+
+df_plot.plot_pie([unrecovered_payments, recovered_payments], ['Unrecovered payments', 'Recovered payments'], 'The amount of loans recovered against the investor funding and the total amount funded')
 ```
-
+![Model](recovered_vs_unrecovered_payments_pieplot.png)
 ## File Structure
 ```
 ├── credentials.yaml
