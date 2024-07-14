@@ -33,6 +33,8 @@ for element in new_database['out_prncp']:
 df_plot.plot_pie([unrecovered_payments, recovered_payments], ['Unrecovered payments', 'Recovered payments'], 'The amount of loans recovered against the investor funding and the total amount funded')
 ```
 ![Model](recovered_vs_unrecovered_payments_pieplot.png)
+
+![Model](projected_losses.png)
 ## File Structure
 ```
 ├── credentials.yaml
