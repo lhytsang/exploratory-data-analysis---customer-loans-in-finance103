@@ -18,7 +18,7 @@ exploratory-data-analysis---customer-loans-in-finance103 is a tool that allows f
 pip install -r requirements.txt
 ```
 ## Usage
-
+All figures that can be printed and plotted are preceded by a comment describing the figure and what it shows as shown below:
 ```python
 recovered_payments = unrecovered_payments = 0
 
@@ -34,6 +34,7 @@ df_plot.plot_pie([unrecovered_payments, recovered_payments], ['Unrecovered payme
 ```
 ![Model](recovered_vs_unrecovered_payments_pieplot.png)
 
+The graphs plotted can also be more detailed like the one below showing the losses in revenue projected over the remaining terms if loans that had been charged off would have finished their term:
 ![Model](projected_losses.png)
 ## File Structure
 ```
