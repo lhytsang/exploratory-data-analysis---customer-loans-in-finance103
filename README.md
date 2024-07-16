@@ -32,10 +32,10 @@ for element in new_database['out_prncp']:
 
 df_plot.plot_pie([unrecovered_payments, recovered_payments], ['Unrecovered payments', 'Recovered payments'], 'The amount of loans recovered against the investor funding and the total amount funded')
 ```
-![Model](recovered_vs_unrecovered_payments_pieplot.png)
+![pieplot](recovered_vs_unrecovered_payments_pieplot.png)
 
 The graphs plotted can also be more detailed like the one below showing the losses in revenue projected over the remaining terms if loans that had been charged off would have finished their term:
-![Model](projected_losses.png)
+![losses](projected_losses.png)
 ## File Structure
 ```
 ├── credentials.yaml
