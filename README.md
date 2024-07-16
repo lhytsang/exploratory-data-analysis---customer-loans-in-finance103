@@ -43,7 +43,11 @@ The graphs plotted can also be more detailed like the one below showing the loss
 ├── db_utils.py
 ├── LICENSE
 ├── new_file.csv
+├── projected_losses.png
+├── __pycache__
+│   └── db_utils.cpython-311.pyc
 ├── README.md
+├── recovered_vs_unrecovered_payments_pieplot.png
 └── requirements.txt
 ```
 
