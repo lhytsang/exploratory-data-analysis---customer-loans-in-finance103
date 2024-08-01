@@ -1,96 +1,74 @@
-import matplotlib.pyplot as plt
-import plotly.express as px
-    
-class Plotter:
+import pandas as pd
+import sqlalchemy 
+
+class RDSDatabaseConnector:
     """
-    A class used to print graphs of the data.
+    A class used to extract the data from a specific website.
 
     
     Attributes
     ----------
-    Dataframe: Pandas dataframe
-        a table containing the data of all members and their financial details
+    credentials: Python dictionary
+        collection of key: value pairs containing the database credentials 
 
-
+        
     Methods
     -------
-    plot_boxplot(df_column)
-        Creates a boxplot of the data in the column df_column of the dataframe
+    initialise_database()
+        Sets up the dataset and returns it as a dataframe 
+    
+    load_csv(file)
+        Opens the CSV file
 
-    plot_missing()
-        Creates a bar chart of how many null values there are in each column of the dataframe
-
-    plot_pie(plot_values, section_names, plot_title)
-        Plots a pie chart with the 'plot_values' given.
-
-    plot_scatter(df_column)
-        Plots a scatter graph of the data in the column df_column of the dataframe 
+    save_file(df, filename)
+        Saves the dataframe given as a file called 'filename'
     """
 
-    def __init__(self, df):
-        self.df = df
+    def __init__(self, credentials):
+        self.credentials = credentials
 
-    @staticmethod
-    def plot_bar(x_vals, y_vals):
+    def initialise_database(self):
         """
-        Plots a bar chart with the given values
+        Establishing the dataset from the credentials given when calling the class and returning the data as a Pandas dataframe
+        
+        Returns:
+        --------
+        Pandas Dataframe containing the financial details and loan payments of a banks's customers
+        """
+        
+        engine = sqlalchemy.create_engine(f"postgresql://{self.credentials['RDS_USER']}:{self.credentials['RDS_PASSWORD']}@{self.credentials['RDS_HOST']}:{self.credentials['RDS_PORT']}/{self.credentials['RDS_DATABASE']}")
+        sql = "SELECT * FROM loan_payments"
+        df = pd.read_sql(sql, con = engine)
 
+        return df
+    
+    @staticmethod
+    def load_csv(file):
+        """
+        Accessing the data given in the file provided. 
+
+        
         Parameters:
         ------------
-        x_vals (list)       A list of the independent variables to be plotted
-        y_vals (list)       A list of the dependent variables to be plotted
+        file (str)     the filename of the document we wish to retrieve the data from
+
+        Returns:
+        --------
+
         """
         
-        plt.bar(x_vals, y_vals)
-
-    def plot_boxplot(self):
-        """
-        Plots the box plot for all dataframe columns whose data only consists of integers and floats
-        """
-
-        numerical_data = [df_col for df_col in self.df.columns if self.df[df_col].dtype in ['int64', 'float64']]
-        ax = self.df[numerical_data].plot(kind='box',figsize=(10, 5))
-        plt.setp(ax.get_xticklabels(), rotation=30, horizontalalignment='right', fontsize='x-small')
-
-    def plot_missing(self):
-        """
-        Plots the amount of missing values in each column of the dataframe in a bar chart
-        """
-        
-        column_headings = self.df.columns.values.tolist()
-        null_values = []
-        for columns in column_headings:
-            null_values.append(self.df[columns].isna().sum())
-
-        self.plot_bar(column_headings, null_values)
-        plt.show()
+        return pd.read_csv(file, index_col=[0])
 
     @staticmethod
-    def plot_pie(plot_values, section_names, plot_title):
+    def save_file(df, filename):
         """
-        Plots a pie chart using the values provided
+        Making a copy of the dataframe on the local machine as a CSV file and labelling the document as 'filename'
 
+        
         Parameters:
         ------------
-        plot_values (list): the variables that we wish to plot
-        section_names (list): a list containing the labels for each pie slice
-        plot_title (str): the title of the pie chart 
+        df (dataframe)  the dataframe which we want to make a copy of
+        filename (str)  the name that we want to save the file as
         """
         
-        fig = px.pie(values=plot_values, names=section_names, title=plot_title)
-        fig.show()
-
-    def plot_scatter(self):
-        """
-        Plots a scatter graph for all the columns of the dataframe 
-        """
-        
-        df_cols = self.df.columns.values.tolist()
-        
-        for df_col in df_cols:
-            x = self.df.index
-            y = self.df[df_col]
-            plt.scatter(x, y, alpha=0.1)
-            plt.title(df_col)
-            plt.show()
-
+        df.to_csv(filename)
