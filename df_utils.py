@@ -134,9 +134,10 @@ class DataFrameInfo:
         """
         
         data_skew = DataFrameInfo.df_skew(df)
+        print("{:<35} {:<15}\n".format('Column name','Skew values'))
 
         for df_col, skews in data_skew.items():
-            print(f'{df_col}: {skews}')
+            print("{:<35} {:<15}".format(df_col,skews))
 
     def stats(self):
         """
