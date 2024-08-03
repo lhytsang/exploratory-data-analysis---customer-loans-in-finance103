@@ -86,7 +86,7 @@ class DataFrameInfo:
 
         Returns:
         --------
-        Dictionary containing the column names as the keys and their skews as the values
+        (dict) Dictionary containing the column names as the keys and their skews as the values
         """
         
         skew = {df_column: df[df_column].skew() for df_column in df.columns if df.dtypes[df_column] in ['float64', 'int64']}
@@ -99,30 +99,33 @@ class DataFrameInfo:
         
         Returns:
         --------
+        (None) Summary of a dataframe
 
         """
         
         return self.df.info()
 
-    def missing(self, df_column):
+    def missing(self):
         """
-        Works out the amount of missing values in the dataframe column and also returns it as a percentage 
-
-        Parameters:
-        ------------
-        df_column (str)     dataframe column
+        Works out the amount of missing values in each dataframe column and also returns it as a percentage 
 
         Returns:
         --------
-        count (int?)    the number of missing values in a dataframe column
-        percentage_count (float)    the amount of missing values as a percentage of the whole column
-        """
+        missing_amount (dict)   dictionary with the dataframe columns as keys and its values as a dictionary of 
+                                the number of missing values and the percentage of missing values
         
-        count = self.df[df_column].isna().sum()
-        percentage_count = (count/self.df_shape()[0]) * 100
-        percentage_count = round(percentage_count, 2)
+        """
+        missing_amount = {}
 
-        return count, percentage_count
+        for df_col in self.df:
+            missing_amount[df_col] = {}
+            count = self.df[df_col].isna().sum()
+            percentage_count = round(((count/self.df_shape()[0]) * 100), 2)
+
+            missing_amount[df_col]['count'] = count
+            missing_amount[df_col]['percentage_count'] = percentage_count
+            
+        return missing_amount
     
     @staticmethod
     def print_skew(df):
@@ -141,7 +144,7 @@ class DataFrameInfo:
 
         Returns:
         --------
-
+        df_stats (Pandas Dataframe)     Dataframe containing descriptive statistics of the dataframe
         """
         df_stats = self.df.describe()
         
@@ -157,7 +160,7 @@ class DataFrameInfo:
 
         Returns:
         --------
-        distinct_vals (list?)       
+        distinct_vals (numpy.ndarray)   Array containing the unique values of the column
         """
         
         distinct_vals = self.df[df_column].unique()
