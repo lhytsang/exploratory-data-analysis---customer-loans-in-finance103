@@ -118,12 +118,12 @@ class DataFrameInfo:
         missing_amount = {}
 
         for df_col in self.df:
-            missing_amount[df_col] = {}
+            missing_amount[df_col] = []
             count = self.df[df_col].isna().sum()
             percentage_count = round(((count/self.df_shape()[0]) * 100), 2)
 
-            missing_amount[df_col]['count'] = count
-            missing_amount[df_col]['percentage_count'] = percentage_count
+            missing_amount[df_col].append(count)
+            missing_amount[df_col].append(percentage_count)
             
         return missing_amount
     
