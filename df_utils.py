@@ -219,6 +219,9 @@ class Plotter:
         ax = self.df[numerical_data].plot(kind='box',figsize=(10, 5))
         plt.setp(ax.get_xticklabels(), rotation=30, horizontalalignment='right', fontsize='x-small')
 
+    def plot_hist(self):
+        self.df.hist(xrot = 90, bins=20, figsize = (25,25))
+
     def plot_missing(self):
         """
         Plots the amount of missing values in each column of the dataframe in a bar chart
@@ -252,9 +255,7 @@ class Plotter:
         Plots a scatter graph for all the columns of the dataframe 
         """
         
-        df_cols = self.df.columns.values.tolist()
-        
-        for df_col in df_cols:
+        for df_col in self.df.columns:
             x = self.df.index
             y = self.df[df_col]
             plt.scatter(x, y, alpha=0.1)
